@@ -29,19 +29,19 @@ This script automatically sorts incoming emails into folders based on predefined
 - Organizes newsletters, work emails, and personal messages.
 - Deletes spam or low-priority emails instantly.
 
-	import imaplib
-	import email
+		import imaplib
+		import email
 
-	mail = imaplib.IMAP4_SSL("imap.gmail.com")
-	mail.login("your_email@gmail.com", "your_password")
-	mail.select("inbox")
-	status, messages = mail.search(None, 'FROM "newsletter@example.com"')
+		mail = imaplib.IMAP4_SSL("imap.gmail.com")
+		mail.login("your_email@gmail.com", "your_password")
+		mail.select("inbox")
+		status, messages = mail.search(None, 'FROM "newsletter@example.com"')
 
-	for num in messages[0].split():
-		mail.store(num, '+X-GM-LABELS', 'Newsletters')  # Labels email
-		mail.store(num, '+FLAGS', '\\Deleted')  # Marks as deleted
-	mail.expunge()
-	mail.logout()
+		for num in messages[0].split():
+			mail.store(num, '+X-GM-LABELS', 'Newsletters')  # Labels email
+			mail.store(num, '+FLAGS', '\\Deleted')  # Marks as deleted
+		mail.expunge()
+		mail.logout()
 
 ## **Contributing**
 
