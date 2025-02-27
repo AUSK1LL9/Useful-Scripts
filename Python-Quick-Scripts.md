@@ -1,4 +1,4 @@
-# *Useful Pythhon Scripts*
+# **Useful Pythhon Scripts**
 
 ## **Learning Python Scripting**
 
@@ -18,16 +18,16 @@ To install Python, follow these steps:
 
 1. Install your OS and Programming IDE
 2. Install Python
-3. Run Pyton
+3. Run Python
 
 ## **Lets get started - Pyton Scripts**
 
 ## *1. Email Organiser*
 This script automatically sorts incoming emails into folders based on predefined rules. Using the imaplib and email libraries, it’s perfect for clearing cluttered inboxes.
 
-*Features:*
-Organizes newsletters, work emails, and personal messages.
-Deletes spam or low-priority emails instantly.
+**Features:**
+- Organizes newsletters, work emails, and personal messages.
+- Deletes spam or low-priority emails instantly.
 
 ## **Contributing**
 
