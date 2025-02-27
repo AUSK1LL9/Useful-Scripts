@@ -1,4 +1,4 @@
-# **Useful Pythhon Scripts**
+# *Useful Pythhon Scripts*
 
 ## **Learning Python Scripting**
 
