@@ -43,6 +43,47 @@ This script automatically sorts incoming emails into folders based on predefined
 		mail.expunge()
 		mail.logout()
 
+**why use it?**
+This script declutters my inbox and ensures I never miss important work emails.
+
+## *2. File Renamer*
+A lifesaver when dealing with messy file names! This script renames files in bulk based on patterns or extensions using the os module.
+
+**Features:**
+- Adds prefixes, suffixes, or numbers to file names.
+- Works on specific file types, like .jpg or .txt.
+
+		import os
+
+		directory = "C:/example_folder"
+		for count, filename in enumerate(os.listdir(directory)):
+			if filename.endswith(".jpg"):
+				new_name = f"image_{count + 1}.jpg"
+				os.rename(os.path.join(directory, filename), os.path.join(directory, new_name))
+
+**why use it?**
+Perfect for renaming photos, downloaded files, or reports in seconds.
+
+## *3. Web Scraper*
+Using libraries like BeautifulSoup and requests, this script extracts useful data from websites, such as product prices, articles, or news updates.
+
+**Features:**
+- Extracts product prices, headlines, or article content.
+- Saves data into structured formats like CSV or JSON.
+
+		import requests
+		from bs4 import BeautifulSoup
+
+		url = "https://example.com"
+		response = requests.get(url)
+		soup = BeautifulSoup(response.text, 'html.parser')
+
+		headlines = [h2.text for h2 in soup.find_all('h2')]
+		print(headlines)
+
+**why use it?**
+I use this script to track competitor pricing, gather market trends, or compile news summaries.
+
 ## **Contributing**
 
 If you'd like to contribute to Project Title, here are some guidelines:
