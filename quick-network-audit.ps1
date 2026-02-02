@@ -1,68 +1,86 @@
 # Define input and output paths
 $inputFile = "C:\temp\targets.txt"
 $outputFile = "C:\temp\NetworkResults.csv"
+$MaxThreads = 20 
 
-# --- Functions ---
-function Check-Port {
-    param($pcTarget, $pcPort)
-    # Using a shorter timeout (1000ms) can speed up scans on dead IPs
-    $check = Test-NetConnection -ComputerName $pcTarget -Port $pcPort -WarningAction SilentlyContinue
-    if ($check.TcpTestSucceeded) { return "Yes" } else { return "No" }
-}
+if (-not (Test-Path $inputFile)) { Write-Error "Input file not found"; return }
+$targets = Get-Content $inputFile | Where-Object { -not [string]::IsNullOrWhiteSpace($_) }
 
-# --- Main Logic ---
-if (-not (Test-Path $inputFile)) {
-    Write-Error "Input file not found at $inputFile"
-    return
-}
+Write-Host "Starting Multi-Threaded scan on $($targets.Count) targets..." -ForegroundColor Yellow
 
-$results = foreach ($target in Get-Content $inputFile) {
-    $target = $target.Trim()
-    if ([string]::IsNullOrWhiteSpace($target)) { continue }
-
-    Write-Host "Processing: $target" -ForegroundColor Cyan
-
-    $ipAddress = $null
-    $fqdnResult = "N/A"
+$ScriptBlock = {
+    param($target)
     
-    # 1. Forward Lookup / IP Validation
-    # If input is an IP, this validates it exists; if Hostname, it finds the IP.
-    $forwardPass = try {
-        $dnsMatch = Resolve-DnsName -Name $target -ErrorAction Stop | Select-Object -First 1
-        $ipAddress = $dnsMatch.IPAddress
-        $fqdnResult = $dnsMatch.Name
-        "Pass"
-    } catch {
-        "Fail"
+    # Fast Port Check Function
+    $TestPort = {
+        param($IP, $Port)
+        $tcpClient = New-Object System.Net.Sockets.TcpClient
+        $connect = $tcpClient.BeginConnect($IP, $Port, $null, $null)
+        $wait = $connect.AsyncWaitHandle.WaitOne(1000, $false)
+        if ($wait -and $tcpClient.Connected) {
+            $tcpClient.Close(); return "Yes"
+        } else {
+            $tcpClient.Close(); return "No"
+        }
     }
 
-    # 2. Reverse Lookup
-    # We use the IP address found above. If the input was already an IP, it uses that string.
-    $reversePass = try {
-        $lookupTarget = if ($ipAddress) { $ipAddress } else { $target }
-        $null = Resolve-DnsName -Name $lookupTarget -ErrorAction Stop
+    # 1. Forward Lookup (Verify it exists)
+    $forward = try { 
+        $null = Resolve-DnsName -Name $target -ErrorAction Stop
+        "Pass" 
+    } catch { "Fail" }
+
+    # 2. Reverse Lookup (Get the FQDN)
+    $dnsName = "N/A"
+    $reverse = try {
+        # We query for PTR specifically to get the hostname from an IP
+        $rev = Resolve-DnsName -Name $target -Type PTR -ErrorAction Stop
+        # Select the hostname; handle multiple results if they exist
+        $dnsName = ($rev | Select-Object -ExpandProperty NameHost -First 1)
         "Pass"
     } catch {
-        "Fail"
+        # Fallback: some DNS setups return the name in the 'Name' field instead
+        try {
+            $rev = Resolve-DnsName -Name $target -ErrorAction Stop
+            $dnsName = $rev.Name
+            "Pass"
+        } catch { "Fail" }
     }
 
-    # 3. Ping Check
-    $pingPass = if (Test-Connection -ComputerName $target -Count 1 -Quiet) { "Pass" } else { "Fail" }
+    # 3. Ping
+    $ping = if (Test-Connection -ComputerName $target -Count 1 -Quiet) { "Pass" } else { "Fail" }
 
-    # 4. Port Checks & Object Creation
-    [PSCustomObject]@{
+    return [PSCustomObject]@{
         Target         = $target
-        Resolved_IP    = if($ipAddress) { $ipAddress } else { "Unknown" }
-        Resolved_FQDN  = $fqdnResult
-        ForwardLookup  = $forwardPass
-        ReverseLookup  = $reversePass
-        PingResponse   = $pingPass
-        SSH_22         = Check-Port $target 22
-        HTTPS_443      = Check-Port $target 443
-        Web_9443       = Check-Port $target 9443
-        RDP_3389       = Check-Port $target 3389
+        DNS_Hostname   = $dnsName
+        ForwardLookup  = $forward
+        ReverseLookup  = $reverse
+        PingResponse   = $ping
+        SSH_22         = &$TestPort $target 22
+        HTTPS_443      = &$TestPort $target 443
+        Web_9443       = &$TestPort $target 9443
+        RDP_3389       = &$TestPort $target 3389
     }
 }
 
-$results | Export-Csv -Path $outputFile -NoTypeInformation
-Write-Host "Optimized scan complete. Results: $outputFile" -ForegroundColor Green
+# --- Runspace Pool Management ---
+$RunspacePool = [runspacefactory]::CreateRunspacePool(1, $MaxThreads)
+$RunspacePool.Open()
+$Jobs = New-Object System.Collections.Generic.List[object]
+
+foreach ($t in $targets) {
+    $PowerShell = [powershell]::Create().AddScript($ScriptBlock).AddArgument($t)
+    $PowerShell.RunspacePool = $RunspacePool
+    $Jobs.Add(@{ Instance = $PowerShell; Handle = $PowerShell.BeginInvoke() })
+}
+
+# Collect results
+$results = foreach ($job in $Jobs) {
+    $job.Instance.EndInvoke($job.Handle)
+    $job.Instance.Dispose()
+}
+$RunspacePool.Close()
+
+# Sort by Target and Export
+$results | Sort-Object Target | Export-Csv -Path $outputFile -NoTypeInformation
+Write-Host "Scan complete. Results saved to $outputFile" -ForegroundColor Green
