@@ -2,18 +2,17 @@
 $inputFiles = "C:\Temp\targets.txt"
 $outputFile = "C:\Temp\CertResults.csv"
 
-# 2. Force all possible TLS protocols for compatibility with older internal servers
-[Net.ServicePointManager]::SecurityProtocol = "Tls, Tls11, Tls12, Tls13"
+# Force TLS 1.2 and 1.3
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 -bor [Net.SecurityProtocolType]::Tls13
 
-# Ensure the output directory exists
-if (!(Test-Path "C:\Temp")) { New-Item -ItemType Directory -Path "C:\Temp" -Force | Out-Null }
+# This bypasses all SSL validation errors (Self-signed, Name mismatch, etc.)
+[Net.ServicePointManager]::ServerCertificateValidationCallback = { $true }
 
 $results = @()
-$port = 443
 
 if (Test-Path $inputFiles) {
     $targets = Get-Content $inputFiles
-    Write-Host "Starting SSL Scan on $($targets.Count) targets...`n" -ForegroundColor Cyan
+    Write-Host "Starting Resilient Scan on $($targets.Count) targets...`n" -ForegroundColor Cyan
 
     foreach ($ip in $targets) {
         $ip = $ip.Trim()
@@ -25,83 +24,79 @@ if (Test-Path $inputFiles) {
         $certData = $null
 
         try {
-            # Attempt TCP Connection with a 2-second timeout
-            $tcpClient = New-Object System.Net.Sockets.TcpClient
-            $connection = $tcpClient.BeginConnect($ip, $port, $null, $null)
-            $wait = $connection.AsyncWaitHandle.WaitOne(2000, $false)
-
-            if (-not $wait) { throw "Connection Timeout (Port 443 closed or blocked)" }
-            $tcpClient.EndConnect($connection)
-
-            # Establish SSL Stream
-            # The { $true } block ignores trust errors so we can actually read the cert
-            $sslStream = New-Object System.Net.Security.SslStream($tcpClient.GetStream(), $false, { $true })
+            # Create a web request to the IP
+            $url = "https://$ip"
+            $request = [System.Net.HttpWebRequest]::Create($url)
+            $request.Timeout = 3000 # 3 second timeout
+            $request.AllowAutoRedirect = $false
             
-            # The SSPI Fix: Using an empty string for the target host name bypasses 
-            # the "Target Name Incorrect" error when connecting via IP.
-            try {
-                $sslStream.AuthenticateAsClient("")
-            } catch {
-                # Fallback to IP if the server requires a string
-                $sslStream.AuthenticateAsClient($ip)
-            }
-
-            $cert = $sslStream.RemoteCertificate
-            $tcpClient.Close()
-
-            if ($cert) {
-                $expiryDate = [DateTime]::Parse($cert.GetExpirationDateString())
-                $issuer = $cert.Issuer
-                $subject = $cert.Subject
-
-                # Logic: Check for Self-Signed (Subject matches Issuer)
-                if ($subject -eq $issuer) {
-                    $status = "Fail"
-                    $reason = "Self-Signed"
-                    $color = "Red"
-                }
-                # Logic: Check for Expiration
-                elseif ($expiryDate -lt (Get-Date)) {
-                    $status = "Fail"
-                    $reason = "Expired"
-                    $color = "Red"
-                }
-
-                $certData = [PSCustomObject]@{
-                    IPAddress  = $ip
-                    Status     = $status
-                    Reason     = $reason
-                    ExpiryDate = $expiryDate
-                    Issuer     = $issuer
-                }
-            }
+            # This triggers the handshake
+            $response = $request.GetResponse()
+            $response.Close()
+            
+            # Retrieve the certificate from the service point
+            $cert = $request.ServicePoint.Certificate
         }
         catch {
-            # Handle SSPI failures, Timeouts, and Refused connections
-            $errorMessage = $_.Exception.Message
-            if ($_.Exception.InnerException) { $errorMessage += " ($($_.Exception.InnerException.Message))" }
+            # Even if the request "fails" (like a 403 or 401), the cert is often still captured
+            $cert = $request.ServicePoint.Certificate
             
+            if (-not $cert) {
+                $status = "Fail"
+                $reason = $_.Exception.Message
+                $color = "Yellow"
+            }
+        }
+
+        if ($cert) {
+            # Cast to X509Certificate2 to get detailed properties
+            $cert2 = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2($cert)
+            
+            $expiryDate = $cert2.NotAfter
+            $issuer = $cert2.Issuer
+            $subject = $cert2.Subject
+
+            # Logic: Check for Self-Signed
+            if ($subject -eq $issuer) {
+                $status = "Fail"
+                $reason = "Self-Signed"
+                $color = "Red"
+            }
+            # Logic: Check for Expiration
+            elseif ($expiryDate -lt (Get-Date)) {
+                $status = "Fail"
+                $reason = "Expired"
+                $color = "Red"
+            }
+
+            $certData = [PSCustomObject]@{
+                IPAddress  = $ip
+                Status     = $status
+                Reason     = $reason
+                ExpiryDate = $expiryDate
+                Issuer     = $issuer
+            }
+        }
+        else {
+            # No cert found at all
             $certData = [PSCustomObject]@{
                 IPAddress  = $ip
                 Status     = "Fail"
-                Reason     = $errorMessage
+                Reason     = "Could not retrieve certificate"
                 ExpiryDate = "N/A"
                 Issuer     = "N/A"
             }
-            $color = "Yellow"
         }
 
-        # Terminal Visuals
+        # Terminal Output
         Write-Host "Checking $ip... " -NoNewline
         Write-Host $certData.Status "($($certData.Reason))" -ForegroundColor $color
-        
         $results += $certData
     }
 
-    # 3. Export to CSV (Note: CSV does not store colors)
     $results | Export-Csv -Path $outputFile -NoTypeInformation
     Write-Host "`nScan Complete. Report saved to: $outputFile" -ForegroundColor Cyan
 }
 else {
-    Write-Host "Error: Could not find $inputFiles" -ForegroundColor Red
+    Write-Host "Error: $inputFiles not found." -ForegroundColor Red
 }
