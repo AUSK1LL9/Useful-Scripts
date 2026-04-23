@@ -1,0 +1,38 @@
+
+7.1.1 - M365SR01: Insecure Configuration of M365 Services
+ISM controls:
+
+Control: 1406; Revision: 4; Updated: Sep-23; Applicability: All; OS: Windows (Hardening standard for M365)
+
+Control: 1560; Revision: 3; Updated: Dec-22; Applicability: All; OS: All (Configuration of cloud services)
+
+Control: 1411; Revision: 2; Updated: Jun-21; Applicability: All; OS: Windows (Use of the Microsoft Security Compliance Toolkit)
+
+Current Risk
+Insufficient, incomplete implementation or deviation from the ASD and Microsoft System Hardening Blueprint controls for core M365 services (Entra ID, Microsoft 365, Intune, Defender, Purview, Teams as well as Exchange and SharePoint Online), resulting in the compromise of confidentiality, availability and integrity of agency systems, data and/or information.
+
+Risk Assessment:
+
+Risk Likelihood	x	Risk Consequence	=	Risk Rating
+ALMOST CERTAIN	x	MAJOR	=	EXTREME
+Recommendations:
+
+Strict Adherence to Blueprint: Implement the complete ASD M365 Hardening Blueprint across all Entra ID and M365 tenancies, ensuring no deviations without a formally documented risk acceptance.
+
+Continuous Compliance Monitoring: Utilise Microsoft Purview and Defender for Cloud to automate the monitoring of configuration drift against the established security baseline.
+
+Intune Policy Enforcement: Standardise Windows 11 endpoint configurations via Intune, strictly enforcing BitLocker, Windows Hello for Business, and Attack Surface Reduction (ASR) rules.
+
+- Treatment #1
+
+Establish a Configuration Baseline: Execute a gap analysis between current settings and the ASD Blueprint for M365.
+
+Automate Remediation: Deploy Intune configuration profiles and Conditional Access policies to enforce the baseline.
+
+Independent Audit: Schedule a formal IRAP assessment or internal security review to validate the implementation of hardening controls.
+
+Residual risk outcome if recommendation is implemented.
+Implementation of the ASD Blueprint and continuous monitoring reduces the likelihood of successful exploitation from "Almost Certain" to "Unlikely." While the consequence remains "Major" due to the sensitivity of government data, the structured hardening of the identity and collaboration plane significantly increases the effort required for an adversary to gain a foothold.
+
+Risk Likelihood	x	Risk Consequence	=	Risk Rating
+UNLIKELY	x	MAJOR	=	HIGH
