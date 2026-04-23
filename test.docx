@@ -1,38 +1,26 @@
-
-7.1.1 - M365SR01: Insecure Configuration of M365 Services
+7.1.2 - M365SR02: Unrestricted Geographic and Network Access
 ISM controls:
-
-Control: 1406; Revision: 4; Updated: Sep-23; Applicability: All; OS: Windows (Hardening standard for M365)
-
-Control: 1560; Revision: 3; Updated: Dec-22; Applicability: All; OS: All (Configuration of cloud services)
-
-Control: 1411; Revision: 2; Updated: Jun-21; Applicability: All; OS: Windows (Use of the Microsoft Security Compliance Toolkit)
-
+•	Control: 1563; Revision: 0; Updated: Sep-22; Applicability: All; OS: All (Restricting access to cloud services based on risk)
+•	Control: 0957; Revision: 7; Updated: Sep-23; Applicability: All; OS: All (Restricting access to systems and applications)
+•	Control: 1506; Revision: 1; Updated: Jun-21; Applicability: All; OS: All (Evaluation of cloud service security)
+________________________________________
 Current Risk
-Insufficient, incomplete implementation or deviation from the ASD and Microsoft System Hardening Blueprint controls for core M365 services (Entra ID, Microsoft 365, Intune, Defender, Purview, Teams as well as Exchange and SharePoint Online), resulting in the compromise of confidentiality, availability and integrity of agency systems, data and/or information.
-
+Without geographic and IP address restrictions applied to the agency’s Azure and M365 tenancy, the cloud SaaS platform is accessible globally, leading to an increased attack surface and higher likelihood of an Azure/M365 account compromise, resulting in the compromise of confidentiality, availability and integrity of agency systems, data and/or information.
 Risk Assessment:
-
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-ALMOST CERTAIN	x	MAJOR	=	EXTREME
+POSSIBLE	x	MAJOR	=	HIGH
+________________________________________
 Recommendations:
-
-Strict Adherence to Blueprint: Implement the complete ASD M365 Hardening Blueprint across all Entra ID and M365 tenancies, ensuring no deviations without a formally documented risk acceptance.
-
-Continuous Compliance Monitoring: Utilise Microsoft Purview and Defender for Cloud to automate the monitoring of configuration drift against the established security baseline.
-
-Intune Policy Enforcement: Standardise Windows 11 endpoint configurations via Intune, strictly enforcing BitLocker, Windows Hello for Business, and Attack Surface Reduction (ASR) rules.
-
+1.	Implement Geofencing: Configure Entra ID Conditional Access policies to block authentication attempts from all countries except Australia and approved international jurisdictions.
+2.	Enforce Trusted Network Locations: Define and mandate the use of agency-controlled IP ranges for high-privilege administrative tasks and sensitive data access.
+3.	Deploy Sign-in Risk Policies: Integrate Entra ID Identity Protection to automatically block or require MFA for sign-ins originating from anonymous IP addresses or atypical locations.
 - Treatment #1
-
-Establish a Configuration Baseline: Execute a gap analysis between current settings and the ASD Blueprint for M365.
-
-Automate Remediation: Deploy Intune configuration profiles and Conditional Access policies to enforce the baseline.
-
-Independent Audit: Schedule a formal IRAP assessment or internal security review to validate the implementation of hardening controls.
-
+•	Define Named Locations: Identify and document the agency’s trusted egress IP addresses and required geographic regions for remote staff.
+•	Configure Conditional Access (CA): Develop and test CA policies that explicitly "Allow" access from Australia while "Blocking" all other regions by default.
+•	Log Analysis and Alerting: Configure Azure Monitor to alert security operations (SecOps) when authentication attempts are blocked by geographic or IP-based restrictions.
+________________________________________
 Residual risk outcome if recommendation is implemented.
-Implementation of the ASD Blueprint and continuous monitoring reduces the likelihood of successful exploitation from "Almost Certain" to "Unlikely." While the consequence remains "Major" due to the sensitivity of government data, the structured hardening of the identity and collaboration plane significantly increases the effort required for an adversary to gain a foothold.
-
+By restricting the logical boundaries of the tenancy to known-good geographic regions and IP ranges, the available attack surface for external threat actors is significantly reduced. This makes it substantially harder for credential-harvesting or brute-force attacks from foreign jurisdictions to succeed, lowering the likelihood to "Rare."
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MAJOR	=	HIGH
+RARE	x	MAJOR	=	MEDIUM
+
