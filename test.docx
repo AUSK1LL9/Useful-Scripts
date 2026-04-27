@@ -1,26 +1,26 @@
-7.1.4 - M365SR04: Ineffective End-User Restrictions within M365
+7.1.5 - W11SR05: Ineffective Endpoint Application Control and Protection
 ISM controls:
-•	Control: 1537; Revision: 1; Updated: Sep-22; Applicability: All; OS: All (Restricting user access to cloud service settings and data)
-•	Control: 0846; Revision: 6; Updated: Jun-21; Applicability: All; OS: All (Authorising and restricting access to data, applications, and local computing resources)
-•	Control: 1511; Revision: 2; Updated: Dec-22; Applicability: All; OS: All (Preventing unauthorised data exfiltration via cloud services)
+•	Control: 1657; Revision: 0; Updated: Dec-23; Applicability: All; OS: Windows (Implementation of Microsoft Defender for Endpoint)
+•	Control: 0329; Revision: 6; Updated: Jun-21; Applicability: All; OS: All (Implementation of application control)
+•	Control: 1490; Revision: 1; Updated: Dec-22; Applicability: All; OS: Windows (Implementation of Microsoft Defender Attack Surface Reduction rules)
 ________________________________________
-Current Risk Ineffective restrictions assigned to end-users within M365 increase the likelihood of exfiltrated data, resulting in the compromise of confidentiality, availability and integrity of agency systems, data and/or information.
+Current Risk
+Insufficient or ineffective implementation of endpoint application control and protection measures including AppLocker for Stand-alone Workstations may lead to a loss of data integrity, exposure or exfiltration of sensitive information or loss of system availability.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 LIKELY	x	MODERATE	=	HIGH
-Export to Sheets
 ________________________________________
 Recommendations:
-1.	Restrict Application Integrated Permissions: Disable the ability for end-users to consent to third-party applications accessing agency data without explicit IT approval.
-2.	Enforce Data Loss Prevention (DLP): Implement Purview DLP policies to identify, monitor, and automatically block the sharing of sensitive information (e.g., TFNs, Medicare numbers) outside the agency.
-3.	Harden Collaboration Settings: Restrict external sharing in SharePoint and OneDrive to "Existing Guests" only and disable anonymous link sharing.
+1.	Mandate Application Control: Deploy AppLocker or Windows Defender Application Control (WDAC) in "Enforced" mode to ensure only agency-approved and digitally signed applications can execute.
+2.	Enforce Attack Surface Reduction (ASR): Enable Microsoft Defender ASR rules specifically targeting common malware vectors, such as blocking executable content from email clients and webmail.
+3.	Harden Stand-alone Endpoints: Apply a rigorous security baseline to stand-alone workstations, ensuring local administrative privileges are strictly limited and all endpoint protection telemetry is logged locally.
 - Treatment #1
-•	Application Consent Workflow: Configure Entra ID to require an administrative review for all user requests to integrate third-party SaaS applications.
-•	Define DLP Policies: Establish and deploy a DLP baseline that monitors for common Australian Government sensitive information types across Exchange, Teams, and SharePoint.
-•	User Training and Awareness: Deliver targeted security awareness training to staff regarding the risks of unauthorised data sharing and the proper use of secure collaboration channels.
+•	AppLocker Policy Development: Generate a comprehensive whitelist based on the agency's standard operating environment (SOE) and digitally sign all bespoke internal scripts.
+•	Defender for Endpoint Integration: Onboard all Windows 11 devices to Microsoft Defender for Endpoint to provide real-time detection, response, and automated investigation capabilities.
+•	Audit and Review: Conduct monthly reviews of application execution logs on stand-alone workstations to identify and block unauthorised or anomalous software attempts.
 ________________________________________
-Residual risk outcome if recommendation is implemented. Strengthening end-user restrictions and deploying automated data protections significantly mitigates the risk of both accidental and intentional data exfiltration. By removing the ability for users to bypass security via third-party apps and enforcing DLP, the likelihood of a successful exfiltration event is reduced to "Unlikely."
+Residual risk outcome if recommendation is implemented.
+The rigorous enforcement of application control and ASR rules significantly hinders the ability of malicious code to execute or persist on the endpoint. By shifting the security posture from reactive detection to proactive whitelisting, the likelihood of a successful compromise is reduced to "Unlikely," ensuring the integrity of the stand-alone environment is maintained.
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 UNLIKELY	x	MODERATE	=	MEDIUM
-Export to Sheets
 
