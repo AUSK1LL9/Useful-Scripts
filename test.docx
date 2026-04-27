@@ -1,26 +1,26 @@
-7.1.6 - M365SR06: Unrestricted Access to External M365 Tenancies
+7.1.7 - M365SR07: Lack of Organisation Branding on Microsoft Login Portal
 ISM controls:
-•	Control: 1511; Revision: 2; Updated: Dec-22; Applicability: All; OS: All (Preventing unauthorised data exfiltration via cloud services)
-•	Control: 1537; Revision: 1; Updated: Sep-22; Applicability: All; OS: All (Restricting user access to cloud service settings and data)
-•	Control: 0846; Revision: 6; Updated: Jun-21; Applicability: All; OS: All (Authorising and restricting access to data and applications)
+•	Control: 1152; Revision: 4; Updated: Dec-22; Applicability: All; OS: All (Establishing a security awareness program)
+•	Control: 0957; Revision: 7; Updated: Sep-23; Applicability: All; OS: All (Restricting access to systems and applications)
+•	Control: 1560; Revision: 3; Updated: Dec-22; Applicability: All; OS: All (Configuration of cloud services)
 ________________________________________
 Current Risk
-End-users can login to tenants other than the agency creating the possibility for a user to transfer information from within *.ga.gov.au to an external M365 tenant, compromising the confidentiality of agency information.
+Lack of organisation branding on the Microsoft Login portal decreases end-user awareness of phishing attacks which may result in the compromise of agency systems and information.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-LIKELY	x	MODERATE	=	HIGH
+ALMOST CERTAIN	x	MODERATE	=	HIGH
 ________________________________________
 Recommendations:
-1.	Implement Tenant Restrictions: Configure Tenant Restrictions (v2) within Entra ID and at the network egress layer to ensure users can only authenticate to the agency's approved tenant list.
-2.	Enforce Managed Device Compliance: Use Conditional Access to prevent logins to any M365 tenancy from non-compliant or unmanaged agency devices.
-3.	Cross-Tenant Access Settings: Strictly define Cross-Tenant Access Settings in Entra ID to block all inbound and outbound B2B collaboration by default, except for verified government partners.
+1.	Customise Tenant Branding: Configure the Entra ID Company Branding settings with the official agency logo, background images, and a specific "Sign-in page text" footer to distinguish the legitimate portal from generic phishing sites.
+2.	Enforce FIDO2/Passwordless Authentication: Transition users to phishing-resistant authentication methods (e.g., Windows Hello for Business or FIDO2 security keys) to mitigate the impact of a user entering credentials into a fraudulent site.
+3.	Implement Integrated Phishing Simulations: Conduct regular training exercises that specifically educate users to look for the agency's custom branding as a validation step during the authentication flow.
 - Treatment #1
-•	Network Header Injection: Configure the agency’s secure web gateway or firewall to inject the Restrict-Access-To-Tenants and Restrict-Access-Context headers into outgoing traffic to Microsoft login services.
-•	Conditional Access Policy Update: Implement a policy that blocks M365 application access if the device state is "Unmanaged," preventing users from bypassing restrictions on personal hardware.
-•	Monitoring Exfiltration Signals: Enable and monitor Microsoft Defender for Cloud Apps (CASB) alerts for anomalous data movements between the agency tenancy and external personal or third-party storage.
+•	Portal Configuration: Upload high-resolution agency-specific assets to the Entra ID Branding blade, ensuring the branding persists across all supported languages.
+•	Help Desk Integration: Update the custom "Post-Sign-in" text to provide direct links to the agency's IT support portal and security reporting instructions.
+•	Phishing Reporting Mechanism: Deploy the "Report Message" add-in in Outlook to allow users to quickly flag suspicious login requests that lack the expected custom branding.
 ________________________________________
 Residual risk outcome if recommendation is implemented.
-By enforcing tenant-level boundaries at both the identity and network layers, the technical path for data exfiltration to personal or external M365 environments is effectively closed. While a determined insider may seek other methods, the likelihood of a successful transfer via standard M365 login flows is reduced to "Unlikely."
+While branding alone is not a fail-safe security control, it serves as a vital visual cue for user verification. Combined with phishing-resistant MFA, the likelihood of a user successfully being phished via a generic landing page is significantly reduced. This shifts the likelihood from "Almost Certain" to "Unlikely."
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 UNLIKELY	x	MODERATE	=	MEDIUM
 
