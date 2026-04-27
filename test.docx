@@ -1,26 +1,26 @@
-7.1.5 - W11SR05: Ineffective Endpoint Application Control and Protection
+7.1.6 - M365SR06: Unrestricted Access to External M365 Tenancies
 ISM controls:
-•	Control: 1657; Revision: 0; Updated: Dec-23; Applicability: All; OS: Windows (Implementation of Microsoft Defender for Endpoint)
-•	Control: 0329; Revision: 6; Updated: Jun-21; Applicability: All; OS: All (Implementation of application control)
-•	Control: 1490; Revision: 1; Updated: Dec-22; Applicability: All; OS: Windows (Implementation of Microsoft Defender Attack Surface Reduction rules)
+•	Control: 1511; Revision: 2; Updated: Dec-22; Applicability: All; OS: All (Preventing unauthorised data exfiltration via cloud services)
+•	Control: 1537; Revision: 1; Updated: Sep-22; Applicability: All; OS: All (Restricting user access to cloud service settings and data)
+•	Control: 0846; Revision: 6; Updated: Jun-21; Applicability: All; OS: All (Authorising and restricting access to data and applications)
 ________________________________________
 Current Risk
-Insufficient or ineffective implementation of endpoint application control and protection measures including AppLocker for Stand-alone Workstations may lead to a loss of data integrity, exposure or exfiltration of sensitive information or loss of system availability.
+End-users can login to tenants other than the agency creating the possibility for a user to transfer information from within *.ga.gov.au to an external M365 tenant, compromising the confidentiality of agency information.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 LIKELY	x	MODERATE	=	HIGH
 ________________________________________
 Recommendations:
-1.	Mandate Application Control: Deploy AppLocker or Windows Defender Application Control (WDAC) in "Enforced" mode to ensure only agency-approved and digitally signed applications can execute.
-2.	Enforce Attack Surface Reduction (ASR): Enable Microsoft Defender ASR rules specifically targeting common malware vectors, such as blocking executable content from email clients and webmail.
-3.	Harden Stand-alone Endpoints: Apply a rigorous security baseline to stand-alone workstations, ensuring local administrative privileges are strictly limited and all endpoint protection telemetry is logged locally.
+1.	Implement Tenant Restrictions: Configure Tenant Restrictions (v2) within Entra ID and at the network egress layer to ensure users can only authenticate to the agency's approved tenant list.
+2.	Enforce Managed Device Compliance: Use Conditional Access to prevent logins to any M365 tenancy from non-compliant or unmanaged agency devices.
+3.	Cross-Tenant Access Settings: Strictly define Cross-Tenant Access Settings in Entra ID to block all inbound and outbound B2B collaboration by default, except for verified government partners.
 - Treatment #1
-•	AppLocker Policy Development: Generate a comprehensive whitelist based on the agency's standard operating environment (SOE) and digitally sign all bespoke internal scripts.
-•	Defender for Endpoint Integration: Onboard all Windows 11 devices to Microsoft Defender for Endpoint to provide real-time detection, response, and automated investigation capabilities.
-•	Audit and Review: Conduct monthly reviews of application execution logs on stand-alone workstations to identify and block unauthorised or anomalous software attempts.
+•	Network Header Injection: Configure the agency’s secure web gateway or firewall to inject the Restrict-Access-To-Tenants and Restrict-Access-Context headers into outgoing traffic to Microsoft login services.
+•	Conditional Access Policy Update: Implement a policy that blocks M365 application access if the device state is "Unmanaged," preventing users from bypassing restrictions on personal hardware.
+•	Monitoring Exfiltration Signals: Enable and monitor Microsoft Defender for Cloud Apps (CASB) alerts for anomalous data movements between the agency tenancy and external personal or third-party storage.
 ________________________________________
 Residual risk outcome if recommendation is implemented.
-The rigorous enforcement of application control and ASR rules significantly hinders the ability of malicious code to execute or persist on the endpoint. By shifting the security posture from reactive detection to proactive whitelisting, the likelihood of a successful compromise is reduced to "Unlikely," ensuring the integrity of the stand-alone environment is maintained.
+By enforcing tenant-level boundaries at both the identity and network layers, the technical path for data exfiltration to personal or external M365 environments is effectively closed. While a determined insider may seek other methods, the likelihood of a successful transfer via standard M365 login flows is reduced to "Unlikely."
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 UNLIKELY	x	MODERATE	=	MEDIUM
 
