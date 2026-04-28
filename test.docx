@@ -1,26 +1,26 @@
-7.1.7 - M365SR07: Lack of Organisation Branding on Microsoft Login Portal
+7.1.8 - M365SR08: Exposure of Synchronised Active Directory Information
 ISM controls:
-•	Control: 1152; Revision: 4; Updated: Dec-22; Applicability: All; OS: All (Establishing a security awareness program)
+•	Control: 1507; Revision: 3; Updated: Dec-23; Applicability: All; OS: All (Privileged access to cloud services is performed through a secure gateway or workstation)
 •	Control: 0957; Revision: 7; Updated: Sep-23; Applicability: All; OS: All (Restricting access to systems and applications)
-•	Control: 1560; Revision: 3; Updated: Dec-22; Applicability: All; OS: All (Configuration of cloud services)
+•	Control: 1563; Revision: 0; Updated: Sep-22; Applicability: All; OS: All (Restricting access to cloud services based on risk)
 ________________________________________
 Current Risk
-Lack of organisation branding on the Microsoft Login portal decreases end-user awareness of phishing attacks which may result in the compromise of agency systems and information.
+Active Directory information within the agency domain is being regularly synchronised with Azure Active Directory (Entra ID). Adversaries may gain access to the agency's Active Directory information should they gain access to the agency Azure Tenant, compromising the integrity and confidentiality of agency information.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-ALMOST CERTAIN	x	MODERATE	=	HIGH
+POSSIBLE	x	MAJOR	=	HIGH
 ________________________________________
 Recommendations:
-1.	Customise Tenant Branding: Configure the Entra ID Company Branding settings with the official agency logo, background images, and a specific "Sign-in page text" footer to distinguish the legitimate portal from generic phishing sites.
-2.	Enforce FIDO2/Passwordless Authentication: Transition users to phishing-resistant authentication methods (e.g., Windows Hello for Business or FIDO2 security keys) to mitigate the impact of a user entering credentials into a fraudulent site.
-3.	Implement Integrated Phishing Simulations: Conduct regular training exercises that specifically educate users to look for the agency's custom branding as a validation step during the authentication flow.
+1.	Limit Synchronisation Scope: Configure Microsoft Entra Connect to only synchronise the minimum necessary attributes and Organisational Units (OUs) required for cloud operations, excluding sensitive on-premises metadata.
+2.	Enforce Strict Tenant Administrative Controls: Protect the cloud-side identity plane by mandating phishing-resistant MFA and Privileged Identity Management (PIM) for all roles capable of viewing or modifying directory data.
+3.	Implement Hybrid Identity Protection: Deploy Microsoft Entra ID Protection and Defender for Identity to detect lateral movement or anomalous directory enumeration across both the on-premises and cloud environments.
 - Treatment #1
-•	Portal Configuration: Upload high-resolution agency-specific assets to the Entra ID Branding blade, ensuring the branding persists across all supported languages.
-•	Help Desk Integration: Update the custom "Post-Sign-in" text to provide direct links to the agency's IT support portal and security reporting instructions.
-•	Phishing Reporting Mechanism: Deploy the "Report Message" add-in in Outlook to allow users to quickly flag suspicious login requests that lack the expected custom branding.
+•	Attribute Filtering: Review and customise the Entra ID Connect sync rules to filter out high-value or sensitive Active Directory attributes (e.g., employee IDs or legacy system comments) that are not functional requirements for M365.
+•	Securing the Sync Server: Harden the on-premises server running Entra ID Connect as a Tier 0 asset, restricting interactive login and applying the same security rigor as a Domain Controller.
+•	Continuous Monitoring: Enable diagnostic logging for Entra ID and integrate these logs with a SIEM (e.g., Microsoft Sentinel) to alert on large-scale exports or unauthorised changes to the directory schema.
 ________________________________________
 Residual risk outcome if recommendation is implemented.
-While branding alone is not a fail-safe security control, it serves as a vital visual cue for user verification. Combined with phishing-resistant MFA, the likelihood of a user successfully being phished via a generic landing page is significantly reduced. This shifts the likelihood from "Almost Certain" to "Unlikely."
+By narrowing the data surface area through attribute filtering and strictly guarding the administrative entry points to the tenant, the risk of an adversary "reaching back" or gaining meaningful intelligence from synchronised data is greatly reduced. The likelihood of an impactful compromise of directory information is lowered to "Rare."
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MODERATE	=	MEDIUM
+RARE	x	MAJOR	=	MEDIUM
 
