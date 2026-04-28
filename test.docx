@@ -1,26 +1,26 @@
-7.1.12 - M365SR12: Failure of Cloud Service Provider to Report Incidents
+7.1.13 - M365SR13: Potentially Unauthorised Transfer of User Profiles to LinkedIn
 ISM controls:
-•	Control: 1512; Revision: 3; Updated: Dec-22; Applicability: All; OS: All (Reporting of security incidents by cloud service providers)
-•	Control: 0140; Revision: 6; Updated: Jun-21; Applicability: All; OS: All (Reporting security incidents to the relevant authorities)
-•	Control: 1506; Revision: 1; Updated: Jun-21; Applicability: All; OS: All (Evaluation of cloud service security)
+•	Control: 1537; Revision: 1; Updated: Sep-22; Applicability: All; OS: All (Restricting user access to cloud service settings and data)
+•	Control: 0846; Revision: 6; Updated: Jun-21; Applicability: All; OS: All (Authorising and restricting access to data and applications)
+•	Control: 1511; Revision: 2; Updated: Dec-22; Applicability: All; OS: All (Preventing unauthorised data exfiltration via cloud services)
 ________________________________________
-Current Risk
-Microsoft fails to report security incidents or breaches to the agency, resulting in such events going unnoticed, undetected, and un-investigated, subsequently increasing attacker dwell time and the likelihood of malicious activities that carry consequence to agency objectives.
+Current Risk With Microsoft integrating LinkedIn functionality with M365, there is the potential for agency user profile information to be transferred to LinkedIn and viewed publicly, increasing the risk of impact to the confidentiality of agency information.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MAJOR	=	MEDIUM
+ALMOST CERTAIN	x	MINOR	=	MEDIUM
+Export to Sheets
 ________________________________________
 Recommendations:
-1.	Mandate Service Level Agreements (SLAs): Ensure that the contract or Memorandum of Understanding (MoU) with the cloud service provider includes specific, legally binding timelines for the notification of security incidents.
-2.	Enable Shared Signal Reporting: Configure Microsoft Entra ID and Defender for Cloud to automatically share security signals and alerts with the agency's Security Operations Centre (SOC) via Graph API or Sentinel.
-3.	Perform Independent Monitoring: Implement third-party security monitoring tools that can independently verify the health and security posture of the tenancy, reducing the sole reliance on provider-reported metrics.
+1.	Disable LinkedIn Integration: Configure the M365 tenant-wide settings to disable LinkedIn account connections, preventing the synchronisation of organisational directory data with personal LinkedIn profiles.
+2.	Restrict User Profile Visibility: Use Entra ID settings to limit the amount of directory information visible to external applications and ensure that sensitive attributes (e.g., specific project team names or office locations) are hidden by default.
+3.	Update Acceptable Use Policies: Ensure agency policies explicitly prohibit the linking of corporate identities to personal social media accounts to maintain a clear boundary between professional and private data.
 - Treatment #1
-•	Incident Response Integration: Develop a joint incident response playbook that defines the communication channels and escalation paths between Microsoft Support and the agency’s internal security team.
-•	Continuous Telemetry Ingestion: Centralise all M365 audit, sign-in, and security logs into a sovereign SIEM instance to allow for internal proactive threat hunting rather than waiting for provider notifications.
-•	Compliance Verification: Conduct an annual review of Microsoft’s SOC 2 Type II reports and Bridge Letters to verify their internal incident reporting effectiveness and adherence to international standards.
+•	Tenant Configuration: Navigate to the Microsoft 365 Admin Centre and toggle off the "LinkedIn integration" setting for all users.
+•	Entra ID Policy Review: Audit the "User settings" blade in Entra ID to ensure "Users can connect their work or school account with LinkedIn" is set to "No."
+•	Staff Communication: Issue a security advisory to all staff explaining the privacy risks associated with social media integration and the agency's stance on identity separation.
 ________________________________________
-Residual risk outcome if recommendation is implemented.
-By formalising notification requirements and establishing independent visibility through log ingestion and proactive hunting, the agency reduces the "blind spot" created by a lack of provider reporting. While a failure to report by the provider still carries a "Major" consequence for the agency, these treatments increase the chance of internal detection, further lowering the likelihood to "Rare."
+Residual risk outcome if recommendation is implemented. By technically disabling the integration at the tenant level, the automated path for data transfer is eliminated. This significantly reduces the likelihood of accidental public exposure of internal profile details. While users may still manually update their LinkedIn profiles, the systemic risk to agency directory integrity is reduced to "Unlikely."
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-RARE	x	MAJOR	=	MEDIUM
+UNLIKELY	x	MINOR	=	LOW
+Export to Sheets
 
