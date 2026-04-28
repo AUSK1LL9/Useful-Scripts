@@ -1,26 +1,25 @@
-7.1.10 - M365SR10: Absence of Data Loss Prevention (DLP) Policies
+7.1.11 - M365SR11: Lack of Independent Backup and Recovery Mechanisms
 ISM controls:
-•	Control: 1511; Revision: 2; Updated: Dec-22; Applicability: All; OS: All (Preventing unauthorised data exfiltration via cloud services)
-•	Control: 0846; Revision: 6; Updated: Jun-21; Applicability: All; OS: All (Authorising and restricting access to data and applications)
-•	Control: 1537; Revision: 1; Updated: Sep-22; Applicability: All; OS: All (Restricting user access to cloud service settings and data)
+•	Control: 1515; Revision: 1; Updated: Sep-22; Applicability: All; OS: All (Backup of data in cloud services)
+•	Control: 1516; Revision: 1; Updated: Sep-22; Applicability: All; OS: All (Restoration of data in cloud services)
+•	Control: 1653; Revision: 0; Updated: Dec-23; Applicability: All; OS: All (Independent verification of data integrity in cloud services)
 ________________________________________
 Current Risk
-No Data Loss Prevention (DLP) policies are presently enforced to restrict sensitive information flow externally, reducing the confidentiality and integrity of sensitive agency information.
+With no third-party backup, recovery, or integrity checking mechanisms in place, Microsoft is singularly in control of the integrity and availability of agency data that resides within the M365 tenancy. This creates a single point of failure where a platform-wide outage, sophisticated ransomware attack, or accidental administrative deletion could result in permanent data loss.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-ALMOST CERTAIN	x	MODERATE	=	HIGH
+POSSIBLE	x	MAJOR	=	HIGH
 ________________________________________
 Recommendations:
-1.	Deploy Purview DLP Baselines: Implement Microsoft Purview DLP policies across Exchange, SharePoint, OneDrive, and Teams, configured to detect and flag Australian Government sensitive info types (e.g., TFNs, Medicare numbers).
-2.	Enforce 'Block' Actions on High-Confidence Matches: Configure DLP policies to automatically block the external sharing of files containing highly sensitive or protected information, rather than merely auditing the event.
-3.	Integrate End-user Justification: Enable "Policy Tips" in M365 apps to educate users in real-time when they attempt to share sensitive data, allowing them to provide a business justification if an override is required.
+1.	Implement Independent Third-Party Backup: Procure and deploy a cloud-to-cloud backup solution (e.g., Veeam, Commvault, or AvePoint) that maintains an immutable copy of Exchange, SharePoint, OneDrive, and Teams data outside of the Microsoft ecosystem.
+2.	Establish a Recovery Time Objective (RTO): Define and document formal RTO and Recovery Point Objective (RPO) targets for core SaaS services, ensuring they align with the agency's broader Business Continuity Plan (BCP).
+3.	Perform Regular Restoration Testing: Conduct quarterly disaster recovery drills to verify the integrity of backed-up data and the effectiveness of the restoration process for both granular items and full-tenant scenarios.
 - Treatment #1
-•	Policy Identification: Identify and document the specific sensitive data schemas and classification levels used by the agency to inform DLP sensitive info types.
-•	Staged Implementation: Roll out DLP policies in "Test Mode" (Audit) for a 30-day period to establish a baseline and tune out false positives before moving to "Enforce" mode.
-•	Alerting and Incident Response: Configure the Microsoft Purview compliance portal to send high-priority alerts to the security operations team whenever a block action is triggered.
+•	Solution Architecture: Design a backup architecture that utilises a separate cloud provider (e.g., AWS S3 with Object Lock or an on-premises target) to store immutable backups, preventing a single set of compromised credentials from deleting both live data and backups.
+•	Integrity Validation: Enable automated daily checksums and integrity alerts within the backup solution to detect silent data corruption or unauthorised modifications.
+•	Business Continuity Integration: Update the agency Disaster Recovery Plan to include specific playbooks for "M365 Tenant Recovery" using the third-party backup tool.
 ________________________________________
 Residual risk outcome if recommendation is implemented.
-Establishing automated DLP controls significantly mitigates the risk of accidental or uneducated data leakage by staff. While a determined insider may attempt to circumvent these controls, the systematic blocking of known sensitive information types reduces the likelihood of successful exfiltration from "Almost Certain" to "Unlikely."
+Implementing an independent, immutable backup solution removes the reliance on Microsoft’s native "recycle bin" features and provides a fallback in the event of a catastrophic platform failure or account-wide compromise. While the consequence of a data loss event remains "Major" due to mission impact, the likelihood of permanent, unrecoverable data loss is reduced to "Rare."
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MODERATE	=	M
-
+RARE	x	MAJOR	=	MEDIUM
