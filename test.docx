@@ -1,26 +1,26 @@
-7.1.13 - M365SR13: Potentially Unauthorised Transfer of User Profiles to LinkedIn
+7.1.14 - M365SR14: Unmanaged Feature Updates and Lifecycle Changes
 ISM controls:
-•	Control: 1537; Revision: 1; Updated: Sep-22; Applicability: All; OS: All (Restricting user access to cloud service settings and data)
-•	Control: 0846; Revision: 6; Updated: Jun-21; Applicability: All; OS: All (Authorising and restricting access to data and applications)
-•	Control: 1511; Revision: 2; Updated: Dec-22; Applicability: All; OS: All (Preventing unauthorised data exfiltration via cloud services)
+•	Control: 0314; Revision: 6; Updated: Jun-21; Applicability: All; OS: All (Change management processes)
+•	Control: 1560; Revision: 3; Updated: Dec-22; Applicability: All; OS: All (Configuration of cloud services)
+•	Control: 1506; Revision: 1; Updated: Jun-21; Applicability: All; OS: All (Evaluation of cloud service security)
 ________________________________________
-Current Risk With Microsoft integrating LinkedIn functionality with M365, there is the potential for agency user profile information to be transferred to LinkedIn and viewed publicly, increasing the risk of impact to the confidentiality of agency information.
+Current Risk
+Microsoft regularly add and remove features from M365 which may impact the agency in the form of introducing new vulnerabilities or impacting production services affecting the integrity, confidentiality, or availability of agency information.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-ALMOST CERTAIN	x	MINOR	=	MEDIUM
-Export to Sheets
+UNLIKELY	x	MAJOR	=	MEDIUM
 ________________________________________
 Recommendations:
-1.	Disable LinkedIn Integration: Configure the M365 tenant-wide settings to disable LinkedIn account connections, preventing the synchronisation of organisational directory data with personal LinkedIn profiles.
-2.	Restrict User Profile Visibility: Use Entra ID settings to limit the amount of directory information visible to external applications and ensure that sensitive attributes (e.g., specific project team names or office locations) are hidden by default.
-3.	Update Acceptable Use Policies: Ensure agency policies explicitly prohibit the linking of corporate identities to personal social media accounts to maintain a clear boundary between professional and private data.
+1.	Establish a Cloud Change Advisory Board (CCAB): Create a dedicated cross-functional team to review the Microsoft 365 Roadmap and Message Centre updates weekly to assess impact before features are rolled out to production.
+2.	Utilise Targeted Release Wings: Configure a subset of "Early Adopter" users in a targeted release ring to validate new features and identify potential security or stability issues before global deployment.
+3.	Standardise Security Impact Assessments: Mandate a brief security review for any major feature changes (e.g., new collaborative apps or generative AI integrations) to ensure they align with existing governance and ISM compliance.
 - Treatment #1
-•	Tenant Configuration: Navigate to the Microsoft 365 Admin Centre and toggle off the "LinkedIn integration" setting for all users.
-•	Entra ID Policy Review: Audit the "User settings" blade in Entra ID to ensure "Users can connect their work or school account with LinkedIn" is set to "No."
-•	Staff Communication: Issue a security advisory to all staff explaining the privacy risks associated with social media integration and the agency's stance on identity separation.
+•	Automated Roadmap Monitoring: Use PowerShell or API integration to pull Message Centre updates into a centralised tracking system (e.g., Jira or ServiceNow) for formal architectural sign-off.
+•	Governance Documentation: Maintain a "Service Definition Document" that lists all enabled M365 services and the specific risk decisions made for disabled features.
+•	Continuous Configuration Auditing: Deploy automated tools like Microsoft Purview or third-party posture management (SSPM) to detect and alert on new default settings introduced by Microsoft updates.
 ________________________________________
-Residual risk outcome if recommendation is implemented. By technically disabling the integration at the tenant level, the automated path for data transfer is eliminated. This significantly reduces the likelihood of accidental public exposure of internal profile details. While users may still manually update their LinkedIn profiles, the systemic risk to agency directory integrity is reduced to "Unlikely."
+Residual risk outcome if recommendation is implemented.
+Proactive monitoring and a structured release process allow the agency to intercept potentially disruptive or insecure feature changes before they impact the wider environment. While the consequence of a platform change remains "Major" due to potential operational downtime, the likelihood of an unmanaged change causing a security incident is reduced to "Rare."
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MINOR	=	LOW
-Export to Sheets
+RARE	x	MAJOR	=	MEDIUM
 
