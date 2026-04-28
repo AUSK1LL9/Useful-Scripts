@@ -1,26 +1,26 @@
-7.1.8 - M365SR08: Exposure of Synchronised Active Directory Information
+7.1.9 - M365SR09: Data Sovereignty and Foreign Access Risks
 ISM controls:
-•	Control: 1507; Revision: 3; Updated: Dec-23; Applicability: All; OS: All (Privileged access to cloud services is performed through a secure gateway or workstation)
-•	Control: 0957; Revision: 7; Updated: Sep-23; Applicability: All; OS: All (Restricting access to systems and applications)
-•	Control: 1563; Revision: 0; Updated: Sep-22; Applicability: All; OS: All (Restricting access to cloud services based on risk)
+•	Control: 0874; Revision: 4; Updated: Jun-21; Applicability: All; OS: All (Data residency for cloud services)
+•	Control: 1510; Revision: 2; Updated: Dec-22; Applicability: All; OS: All (Evaluating legal and privacy risks associated with cloud service providers)
+•	Control: 0071; Revision: 7; Updated: Sep-23; Applicability: All; OS: All (Protection of data at rest within cloud environments)
 ________________________________________
 Current Risk
-Active Directory information within the agency domain is being regularly synchronised with Azure Active Directory (Entra ID). Adversaries may gain access to the agency's Active Directory information should they gain access to the agency Azure Tenant, compromising the integrity and confidentiality of agency information.
+Information repositories for M365 reside in regions both inside and outside of Australia which may present data sovereignty or ownership issues, establishing concern over the capability for foreign powers to leverage their authority to intercept or otherwise access agency data.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-POSSIBLE	x	MAJOR	=	HIGH
+LIKELY	x	MAJOR	=	HIGH
 ________________________________________
 Recommendations:
-1.	Limit Synchronisation Scope: Configure Microsoft Entra Connect to only synchronise the minimum necessary attributes and Organisational Units (OUs) required for cloud operations, excluding sensitive on-premises metadata.
-2.	Enforce Strict Tenant Administrative Controls: Protect the cloud-side identity plane by mandating phishing-resistant MFA and Privileged Identity Management (PIM) for all roles capable of viewing or modifying directory data.
-3.	Implement Hybrid Identity Protection: Deploy Microsoft Entra ID Protection and Defender for Identity to detect lateral movement or anomalous directory enumeration across both the on-premises and cloud environments.
+1.	Enforce Australian Data Residency: Configure M365 Multi-Geo Capabilities or Tenant Settings to ensure all primary data at rest (Exchange Online, SharePoint, and OneDrive) is strictly pinned to the Australian geo-locations.
+2.	Deploy Customer Key with Availability Key: Implement Microsoft Purview Customer Key to provide the agency with an additional layer of control over encryption keys, ensuring data remains unreadable even if foreign legal processes grant access to physical storage.
+3.	Formalise Data Sovereignty Agreements: Review and update cloud service agreements to ensure they align with the Protective Security Policy Framework (PSPF) and the Digital Transformation Agency (DTA) hosting strategy.
 - Treatment #1
-•	Attribute Filtering: Review and customise the Entra ID Connect sync rules to filter out high-value or sensitive Active Directory attributes (e.g., employee IDs or legacy system comments) that are not functional requirements for M365.
-•	Securing the Sync Server: Harden the on-premises server running Entra ID Connect as a Tier 0 asset, restricting interactive login and applying the same security rigor as a Domain Controller.
-•	Continuous Monitoring: Enable diagnostic logging for Entra ID and integrate these logs with a SIEM (e.g., Microsoft Sentinel) to alert on large-scale exports or unauthorised changes to the directory schema.
+•	Data Location Audit: Utilise the Microsoft 365 Admin Centre to verify the current "Data Location" for all core services and initiate a data migration for any services residing outside of Australia.
+•	Encryption Management: Deploy Azure Key Vault to manage agency-controlled encryption keys, ensuring that the agency maintains the ability to revoke access to encrypted content.
+•	Supply Chain Risk Assessment: Conduct a comprehensive security assessment of the cloud service provider’s legal jurisdiction and compliance with Australian privacy principles.
 ________________________________________
 Residual risk outcome if recommendation is implemented.
-By narrowing the data surface area through attribute filtering and strictly guarding the administrative entry points to the tenant, the risk of an adversary "reaching back" or gaining meaningful intelligence from synchronised data is greatly reduced. The likelihood of an impactful compromise of directory information is lowered to "Rare."
+By pinning data at rest to Australian shores and maintaining control over encryption keys, the agency significantly mitigates the risk of foreign jurisdictional interference. While the provider's global operations still present a residual "Major" consequence in a worst-case scenario, the likelihood of unauthorised foreign access to readable agency data is reduced to "Unlikely."
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-RARE	x	MAJOR	=	MEDIUM
+UNLIKELY	x	MAJOR	=	HIGH
 
