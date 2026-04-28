@@ -1,25 +1,26 @@
-7.1.11 - M365SR11: Lack of Independent Backup and Recovery Mechanisms
+7.1.12 - M365SR12: Failure of Cloud Service Provider to Report Incidents
 ISM controls:
-•	Control: 1515; Revision: 1; Updated: Sep-22; Applicability: All; OS: All (Backup of data in cloud services)
-•	Control: 1516; Revision: 1; Updated: Sep-22; Applicability: All; OS: All (Restoration of data in cloud services)
-•	Control: 1653; Revision: 0; Updated: Dec-23; Applicability: All; OS: All (Independent verification of data integrity in cloud services)
+•	Control: 1512; Revision: 3; Updated: Dec-22; Applicability: All; OS: All (Reporting of security incidents by cloud service providers)
+•	Control: 0140; Revision: 6; Updated: Jun-21; Applicability: All; OS: All (Reporting security incidents to the relevant authorities)
+•	Control: 1506; Revision: 1; Updated: Jun-21; Applicability: All; OS: All (Evaluation of cloud service security)
 ________________________________________
 Current Risk
-With no third-party backup, recovery, or integrity checking mechanisms in place, Microsoft is singularly in control of the integrity and availability of agency data that resides within the M365 tenancy. This creates a single point of failure where a platform-wide outage, sophisticated ransomware attack, or accidental administrative deletion could result in permanent data loss.
+Microsoft fails to report security incidents or breaches to the agency, resulting in such events going unnoticed, undetected, and un-investigated, subsequently increasing attacker dwell time and the likelihood of malicious activities that carry consequence to agency objectives.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-POSSIBLE	x	MAJOR	=	HIGH
+UNLIKELY	x	MAJOR	=	MEDIUM
 ________________________________________
 Recommendations:
-1.	Implement Independent Third-Party Backup: Procure and deploy a cloud-to-cloud backup solution (e.g., Veeam, Commvault, or AvePoint) that maintains an immutable copy of Exchange, SharePoint, OneDrive, and Teams data outside of the Microsoft ecosystem.
-2.	Establish a Recovery Time Objective (RTO): Define and document formal RTO and Recovery Point Objective (RPO) targets for core SaaS services, ensuring they align with the agency's broader Business Continuity Plan (BCP).
-3.	Perform Regular Restoration Testing: Conduct quarterly disaster recovery drills to verify the integrity of backed-up data and the effectiveness of the restoration process for both granular items and full-tenant scenarios.
+1.	Mandate Service Level Agreements (SLAs): Ensure that the contract or Memorandum of Understanding (MoU) with the cloud service provider includes specific, legally binding timelines for the notification of security incidents.
+2.	Enable Shared Signal Reporting: Configure Microsoft Entra ID and Defender for Cloud to automatically share security signals and alerts with the agency's Security Operations Centre (SOC) via Graph API or Sentinel.
+3.	Perform Independent Monitoring: Implement third-party security monitoring tools that can independently verify the health and security posture of the tenancy, reducing the sole reliance on provider-reported metrics.
 - Treatment #1
-•	Solution Architecture: Design a backup architecture that utilises a separate cloud provider (e.g., AWS S3 with Object Lock or an on-premises target) to store immutable backups, preventing a single set of compromised credentials from deleting both live data and backups.
-•	Integrity Validation: Enable automated daily checksums and integrity alerts within the backup solution to detect silent data corruption or unauthorised modifications.
-•	Business Continuity Integration: Update the agency Disaster Recovery Plan to include specific playbooks for "M365 Tenant Recovery" using the third-party backup tool.
+•	Incident Response Integration: Develop a joint incident response playbook that defines the communication channels and escalation paths between Microsoft Support and the agency’s internal security team.
+•	Continuous Telemetry Ingestion: Centralise all M365 audit, sign-in, and security logs into a sovereign SIEM instance to allow for internal proactive threat hunting rather than waiting for provider notifications.
+•	Compliance Verification: Conduct an annual review of Microsoft’s SOC 2 Type II reports and Bridge Letters to verify their internal incident reporting effectiveness and adherence to international standards.
 ________________________________________
 Residual risk outcome if recommendation is implemented.
-Implementing an independent, immutable backup solution removes the reliance on Microsoft’s native "recycle bin" features and provides a fallback in the event of a catastrophic platform failure or account-wide compromise. While the consequence of a data loss event remains "Major" due to mission impact, the likelihood of permanent, unrecoverable data loss is reduced to "Rare."
+By formalising notification requirements and establishing independent visibility through log ingestion and proactive hunting, the agency reduces the "blind spot" created by a lack of provider reporting. While a failure to report by the provider still carries a "Major" consequence for the agency, these treatments increase the chance of internal detection, further lowering the likelihood to "Rare."
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 RARE	x	MAJOR	=	MEDIUM
+
