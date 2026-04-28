@@ -1,26 +1,26 @@
-7.1.9 - M365SR09: Data Sovereignty and Foreign Access Risks
+7.1.10 - M365SR10: Absence of Data Loss Prevention (DLP) Policies
 ISM controls:
-•	Control: 0874; Revision: 4; Updated: Jun-21; Applicability: All; OS: All (Data residency for cloud services)
-•	Control: 1510; Revision: 2; Updated: Dec-22; Applicability: All; OS: All (Evaluating legal and privacy risks associated with cloud service providers)
-•	Control: 0071; Revision: 7; Updated: Sep-23; Applicability: All; OS: All (Protection of data at rest within cloud environments)
+•	Control: 1511; Revision: 2; Updated: Dec-22; Applicability: All; OS: All (Preventing unauthorised data exfiltration via cloud services)
+•	Control: 0846; Revision: 6; Updated: Jun-21; Applicability: All; OS: All (Authorising and restricting access to data and applications)
+•	Control: 1537; Revision: 1; Updated: Sep-22; Applicability: All; OS: All (Restricting user access to cloud service settings and data)
 ________________________________________
 Current Risk
-Information repositories for M365 reside in regions both inside and outside of Australia which may present data sovereignty or ownership issues, establishing concern over the capability for foreign powers to leverage their authority to intercept or otherwise access agency data.
+No Data Loss Prevention (DLP) policies are presently enforced to restrict sensitive information flow externally, reducing the confidentiality and integrity of sensitive agency information.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-LIKELY	x	MAJOR	=	HIGH
+ALMOST CERTAIN	x	MODERATE	=	HIGH
 ________________________________________
 Recommendations:
-1.	Enforce Australian Data Residency: Configure M365 Multi-Geo Capabilities or Tenant Settings to ensure all primary data at rest (Exchange Online, SharePoint, and OneDrive) is strictly pinned to the Australian geo-locations.
-2.	Deploy Customer Key with Availability Key: Implement Microsoft Purview Customer Key to provide the agency with an additional layer of control over encryption keys, ensuring data remains unreadable even if foreign legal processes grant access to physical storage.
-3.	Formalise Data Sovereignty Agreements: Review and update cloud service agreements to ensure they align with the Protective Security Policy Framework (PSPF) and the Digital Transformation Agency (DTA) hosting strategy.
+1.	Deploy Purview DLP Baselines: Implement Microsoft Purview DLP policies across Exchange, SharePoint, OneDrive, and Teams, configured to detect and flag Australian Government sensitive info types (e.g., TFNs, Medicare numbers).
+2.	Enforce 'Block' Actions on High-Confidence Matches: Configure DLP policies to automatically block the external sharing of files containing highly sensitive or protected information, rather than merely auditing the event.
+3.	Integrate End-user Justification: Enable "Policy Tips" in M365 apps to educate users in real-time when they attempt to share sensitive data, allowing them to provide a business justification if an override is required.
 - Treatment #1
-•	Data Location Audit: Utilise the Microsoft 365 Admin Centre to verify the current "Data Location" for all core services and initiate a data migration for any services residing outside of Australia.
-•	Encryption Management: Deploy Azure Key Vault to manage agency-controlled encryption keys, ensuring that the agency maintains the ability to revoke access to encrypted content.
-•	Supply Chain Risk Assessment: Conduct a comprehensive security assessment of the cloud service provider’s legal jurisdiction and compliance with Australian privacy principles.
+•	Policy Identification: Identify and document the specific sensitive data schemas and classification levels used by the agency to inform DLP sensitive info types.
+•	Staged Implementation: Roll out DLP policies in "Test Mode" (Audit) for a 30-day period to establish a baseline and tune out false positives before moving to "Enforce" mode.
+•	Alerting and Incident Response: Configure the Microsoft Purview compliance portal to send high-priority alerts to the security operations team whenever a block action is triggered.
 ________________________________________
 Residual risk outcome if recommendation is implemented.
-By pinning data at rest to Australian shores and maintaining control over encryption keys, the agency significantly mitigates the risk of foreign jurisdictional interference. While the provider's global operations still present a residual "Major" consequence in a worst-case scenario, the likelihood of unauthorised foreign access to readable agency data is reduced to "Unlikely."
+Establishing automated DLP controls significantly mitigates the risk of accidental or uneducated data leakage by staff. While a determined insider may attempt to circumvent these controls, the systematic blocking of known sensitive information types reduces the likelihood of successful exfiltration from "Almost Certain" to "Unlikely."
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MAJOR	=	HIGH
+UNLIKELY	x	MODERATE	=	M
 
