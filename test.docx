@@ -1,22 +1,22 @@
-7.1.1 - W11SR04: Reputational Damage and Regulatory Scrutiny
+•	
+7.1.1 - W11SR05: Insufficient Endpoint Application Control
 ISM controls:
-•	0013; 0015 (Relating to continuous security monitoring and reporting to chief information security officers).
-•	0031; 0032 (Relating to the maintenance of an accurate system security plan and security assessment report).
-Current Risk There is a risk that a significant cyber incident or a perceived failure to comply with mandatory government security policies (such as the Essential Eight or the PSPF) during the Windows 11 rollout could cause substantial harm to the Department's reputation. Such a failure could lead to intrusive external audits, public criticism, or the requirement to appear before Senate hearings to justify security posturing and investment decisions.
+•	0041; 0043; 1657 (Relating to the implementation and enforcement of application control).
+•	0329; 0330 (Relating to the restriction of administrative privileges and local administrator accounts).
+•	1416 (Relating to the validation of software integrity and application execution).
+Current Risk There is a risk that insufficient or ineffective implementation of endpoint application control and protection measures (specifically regarding the use of AirLocker or AppLocker for stand-alone workstations) could allow the execution of unapproved or malicious software. This may lead to a loss of data integrity, the exposure or exfiltration of sensitive information, or a significant loss of system availability across the Windows 11 fleet.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-POSSIBLE	x	MAJOR	=	HIGH
-Export to Sheets
+LIKELY	x	MODERATE	=	HIGH
 Recommendations:
-•	Rigorous Governance Framework: Establish a formal project governance board to oversee the migration, ensuring all security milestones are transparently documented and signed off by the Relevant Authority.
-•	Proactive Stakeholder Engagement: Maintain regular briefing cycles with departmental leadership and relevant central agencies to communicate progress and proactively manage expectations regarding compliance.
-•	Independent Security Assessments: Commission regular, independent IRAP assessments throughout the deployment phases to provide external validation of the security controls and compliance status.
+•	Mandatory Application Control Policy: Enforce a strict "Allow list" policy for all executable files, scripts, and installers on stand-alone workstations, ensuring only approved departmental software can run.
+•	Integrate with Intune/Endpoint Manager: Centralise the management of application control policies to ensure consistent enforcement and rapid deployment of updates across both networked and stand-alone devices.
+•	Removal of Local Administrative Rights: Ensure all users operate with standard user privileges to prevent the manual bypass of application control mechanisms and reduce the potential impact of malware.
 - Treatment #1
-•	Develop a comprehensive communications and incident response plan specifically tailored to address public and parliamentary scrutiny following a security event.
-•	Implement a continuous compliance monitoring toolset to provide real-time reporting against the ISM and Essential Eight maturity levels.
-•	Maintain an evidence-based repository of all security design decisions and risk acceptances to ensure defensibility during external audits or inquiries.
-Residual risk outcome if recommendation is implemented. By implementing robust governance, independent validation, and proactive reporting, the Department can demonstrate "due diligence" in its security approach. While the consequence of a public inquiry remains "Major," the likelihood of such an event occurring due to negligence or lack of oversight is reduced to "Unlikely," as the Department will have a defensible and transparent security posture.
+•	Implement AirLocker/AppLocker in "Enforce" mode with digital signature validation for all mission-critical applications.
+•	Conduct regular audits of application execution logs via a centralised SIEM or local log collector to identify attempted executions of unauthorised software.
+•	Establish a formalised process for the rapid assessment and "Allow listing" of new software requirements to prevent user circumvention of security controls.
+Residual risk outcome if recommendation is implemented. The implementation of robust application control and the removal of local administrative rights significantly reduces the attack surface of the Windows 11 environment. By ensuring that only verified, signed, and approved applications can execute, the likelihood of a malware-based incident is reduced to "Unlikely." While the consequence of a compromise remains "Moderate," the overall risk is brought within the agency's acceptable threshold.
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MAJOR	=	HIGH
-Export to Sheets
+UNLIKELY	x	MODERATE	=	MEDIUM
 
