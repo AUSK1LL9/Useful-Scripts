@@ -1,23 +1,24 @@
-7.1.1 - W11SR10: Ineffective Credential Management for Stand-alone Workstations
+W11SR11: Insufficient Identity and Access Management (IAM) Controls
 ISM controls:
-•	0421; 0431; 0433 (Relating to the enforcement of password complexity, length, and rotation).
-•	0974; 1173 (Relating to the management of local administrative accounts and credentials).
-•	1401 (Relating to the secure storage and protection of authentication credentials).
+•	0411; 1173; 1504 (Relating to the identification and authorisation of users).
+•	0421; 0431 (Relating to the use of unique identification and strong authentication).
+•	0582; 0800 (Relating to the regular review of user access and privileges).
+•	1401; 1565 (Relating to the protection of authentication credentials and cloud identity security).
 Current Risk
-A lack of effective password credential management—specifically regarding complexity, length, and rotation frequency—on stand-alone workstations presents a significant security vulnerability. For both local privileged and unprivileged accounts, the absence of enforced credential policies may lead to poor credential hygiene. This increases the risk of brute-force attacks or credential harvesting, potentially leading to the compromise of the confidentiality, integrity, or availability of the agency’s system and its data.
+There is a risk that the insufficient implementation of user identity and access management (IAM) processes and controls for the Windows 11 environment will lead to a compromise of the system and its data. Specifically, a failure to strictly enforce the principle of least privilege, combined with inadequate authentication mechanisms or identity lifecycle management, could allow unauthorised individuals to gain access to sensitive departmental information or perform unauthorised system changes.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-LIKELY	x	MODERATE	=	HIGH
+LIKELY	x	MAJOR	=	HIGH
 Recommendations:
-•	Enforce Hardened Password Policies: Apply Group Policy Objects (GPO) or local security policies to all stand-alone images that mandate a minimum of 14 characters, complex character sets, and a defined rotation period in line with the ISM.
-•	Implement Local Administrator Password Solution (LAPS): Where feasible for the environment, utilise a mechanism to ensure local administrator passwords are unique to each workstation and rotated automatically to prevent lateral movement.
-•	User Security Awareness: Provide targeted guidance to users of stand-alone systems on the importance of unique, complex passphrases and the risks associated with credential sharing or improper storage.
+•	Implement Multi-Factor Authentication (MFA): Mandate the use of MFA (utilising Windows Hello for Business or FIDO2 security keys) for all user and administrative access to Windows 11 endpoints and associated cloud services.
+•	Enforce the Principle of Least Privilege: Utilise Entra ID (Azure AD) Role-Based Access Control (RBAC) and Privileged Identity Management (PIM) to ensure users and administrators only have the minimum access required for their roles.
+•	Automated Identity Lifecycle Management: Integrate identity provisioning with departmental HR systems to ensure that access is automatically adjusted or revoked upon a change in a user's employment status or role.
 - Treatment #1
-•	Utilise the Microsoft Security Compliance Toolkit to deploy hardened account lockout and password history policies on all Windows 11 stand-alone endpoints.
-•	Implement a "Physical Security Audit" process where local credential configurations are verified against the system security plan during quarterly inspections.
-•	Mandate the use of approved, encrypted hardware-based password managers for users who must manage multiple local credentials in disconnected environments.
+•	Conduct a comprehensive audit of all existing administrative privileges and migrate to a "Just-In-Time" (JIT) elevation model for all management tasks.
+•	Deploy Conditional Access policies that evaluate device compliance and location before granting access to sensitive departmental resources.
+•	Establish a recurring quarterly access review process where the Relevant Authority must re-validate the access requirements for all users with elevated privileges.
 Residual risk outcome if recommendation is implemented.
-Enforcing technical password constraints and ensuring unique local administrative credentials significantly reduces the efficacy of automated password attacks. While the management overhead of stand-alone accounts remains a factor, the likelihood of a successful credential-based compromise is reduced to "Unlikely." The consequence remains "Moderate," reflecting the potential impact of a single-system compromise.
+The implementation of MFA and strict RBAC significantly reduces the likelihood of identity-based attacks succeeding. While the potential consequence of a compromise remains "Major" due to the nature of the data involved, the proactive enforcement of modern IAM controls reduces the likelihood to "Unlikely," bringing the overall risk within the departmental risk tolerance.
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MODERATE	=	MEDIUM
+UNLIKELY	x	MAJOR	=	HIGH
 
