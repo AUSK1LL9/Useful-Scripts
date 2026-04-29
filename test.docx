@@ -1,24 +1,24 @@
-7.1.1 - W11SR15: Ineffective Monitoring of Data Transfers for Stand-alone Workstations
+7.1.1 - W11SR16: Inadequate Email Classification and DLP Management
 ISM controls:
-•	0580; 1537 (Relating to the generation of event logs for data access and transfer).
-•	0600; 0601 (Relating to the control and monitoring of removable media usage).
-•	1405 (Relating to the analysis of event logs to detect security incidents).
-•	1540 (Relating to the retention of audit logs for forensic purposes).
+•	0553; 1234 (Relating to the use of protective markings and email classification).
+•	0607; 0608 (Relating to the implementation and monitoring of Data Loss Prevention (DLP) controls).
+•	1148 (Relating to the filtering of incoming and outgoing email for malicious or unauthorised content).
+•	1540 (Relating to the retention of logs for security and data spill investigations).
 Current Risk
-Due to the periodic disconnected nature of the stand-alone workstations, the agency may observe ineffective, inaccurate, or missing data transfer logs related to data imported, exported, copied, and deleted between stand-alone workstations and other devices (such as removable media or peripheral assets). This creates a visibility gap that may lead to a decrease in the detection of insider threats, compromised systems leading to data leaks, and a general compromise of the confidentiality, integrity, or availability of the agency’s system and its data.
+There is a risk that the inadequate management of email classification and Data Loss Prevention (DLP) systems within the Windows 11 and Microsoft 365 environment will lead to the accidental or malicious exposure and exfiltration of sensitive information. In the event of a data spill, a lack of robust classification and monitoring tools could result in significant agency reputational damage and legal non-compliance with government data protection standards.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-LIKELY	x	MODERATE	=	HIGH
+LIKELY	x	MAJOR	=	HIGH
 Recommendations:
-•	Implement Mandatory Removable Media Logging: Configure advanced local audit policies to specifically capture and store all file-level interactions with removable storage devices, including filenames and volume serial numbers.
-•	Establish a Data Transfer Custodianship: Implement a process where all data imports and exports to stand-alone environments must be performed through a designated "transfer station" that maintains a permanent, centralised audit log.
-•	Routine Forensic Log Reviews: Schedule periodic forensic reviews of local workstation logs to reconstruct data movement patterns and identify any unauthorised or anomalous transfer activity that occurred during disconnected periods.
+•	Deploy Mandatory Sensitivity Labelling: Implement Microsoft Information Protection (MIP) sensitivity labels that mandate users classify every email and document before it can be sent or saved.
+•	Automate DLP Policies: Configure automated DLP rules in Microsoft Purview to detect and block the transmission of sensitive data (e.g., TFNs, medical records, or specific departmental keywords) to external or unauthorised recipients.
+•	User Data Handling Education: Conduct regular, mandatory training for all staff on the correct application of protective markings and the importance of adhering to DLP policies for agency data.
 - Treatment #1
-•	Enforce "Write-Block" or "Read-Only" policies on all USB ports via Intune/GPO, requiring a formal exception and the use of agency-issued, encrypted media for any data export.
-•	Deploy Host-based Intrusion Detection System (HIDS) or File Integrity Monitoring (FIM) tools that generate persistent alerts for mass file deletions or exports, ensuring these are captured for manual retrieval.
-•	Integrate the manual log retrieval process with the agency's existing Insider Threat Program to ensure stand-alone workstation telemetry is included in broader behavioral analysis.
+•	Enforce technical controls that prevent the sending of any email with an "External" recipient if the content is marked with a classification higher than "OFFICIAL".
+•	Integrate email security alerts into the centralised SIEM (Splunk) to provide real-time visibility into attempted data breaches or classification overrides.
+•	Develop a formal Data Spill Management Plan that includes automated "Search and Purge" scripts to rapidly contain and remediate any classified data that is incorrectly shared via email.
 Residual risk outcome if recommendation is implemented.
-By formalising the data transfer process and ensuring granular local logging is captured and subsequently ingested into the agency SIEM, the window of "invisibility" is significantly narrowed. While the disconnected state prevents immediate intervention, the implementation of forensic-grade logging and physical transfer controls reduces the likelihood of an undetected data leak or insider threat event to "Unlikely."
+The implementation of automated classification and strict DLP blocking significantly reduces the probability of a data spill occurring through negligence or technical oversight. By ensuring that sensitive information is technically constrained and that users are prompted to apply correct labels, the likelihood of a major exposure event is reduced to "Unlikely". While the potential consequence of a spill remains "Major" due to the sensitivity of government data, the overall risk is brought within the agency's tolerance levels.
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MODERATE	=	MEDIUM
+UNLIKELY	x	MAJOR	=	HIGH
 
