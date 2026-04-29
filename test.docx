@@ -1,23 +1,24 @@
-•	
-7.1.1 - W11SR13: Bypassing Secure Internet Gateway (SIG) Controls
+7.1.1 - W11SR14: Ineffective Security Reporting and Compliance Data for Stand-alone Workstations
 ISM controls:
-•	0206; 0209 (Relating to the use of an approved Secure Internet Gateway).
-•	0464; 0466 (Relating to the use of Virtual Private Networks (VPNs) to secure communications).
-•	0953; 1081 (Relating to web content filtering and SSL/TLS inspection).
-•	1182 (Relating to the use of intrusion detection and prevention systems).
-Current Risk There is a risk that the lack of a mandatory agency VPN to the Secure Internet Gateway (SIG) for stand-alone workstations will allow these devices to access the internet directly. By bypassing the agency's primary IPS, web, and content filtering controls, the attack surface is significantly increased. This reduced visibility and lack of centralised security control may lead to a compromise of the confidentiality, integrity, or availability of the agency’s system and its sensitive data.
+•	0013; 0015 (Relating to the security reporting to chief information security officers and service providers).
+•	0031; 0032 (Relating to the maintenance of system security plans and security assessment reports).
+•	1410; 1471 (Relating to the identification of installed software and configuration management).
+•	1494; 1495 (Relating to the identification and reporting of security vulnerabilities).
+Current Risk
+Due to the periodic disconnected nature of stand-alone workstations, the agency may observe ineffective, inaccurate, or missing reporting and compliance data. This lack of telemetry prevents the effective management and identification of installed software versions, potential vulnerable software, and deployed software counts. This visibility gap leads to an increased attack surface and reduced security control, potentially resulting in a compromise of the confidentiality, integrity, or availability of the agency’s system and its data.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 LIKELY	x	MODERATE	=	HIGH
 Recommendations:
-•	Implement "Always-On" VPN: Deploy an "Always-On" VPN solution (such as Microsoft Tunnel or a third-party equivalent) that forces all internet-bound traffic from stand-alone workstations through the agency SIG.
-•	Enforce Endpoint-Based Web Filtering: Implement client-side web content filtering (e.g., Microsoft Defender for Endpoint web protection) to provide a secondary layer of security for when the device is not connected to the corporate network.
-•	Disable Split Tunnelling: Configure VPN profiles to strictly prohibit split tunnelling, ensuring that no traffic can bypass the inspection capabilities of the Secure Internet Gateway.
+•	Implement Offline Asset Discovery: Establish a mandatory process for the manual extraction of hardware and software inventories from stand-alone devices using approved, secure tools for ingestion into a centralised asset management database.
+•	Standardise Baseline Auditing: Use automated configuration audit scripts (e.g., PowerShell-based CIS or ASD baseline checkers) to generate local compliance reports that are reviewed during every physical maintenance cycle.
+•	Vulnerability Register for Stand-alone Assets: Maintain a dedicated, high-fidelity register of software vulnerabilities specifically for disconnected assets, cross-referenced with vendor security advisories to track patching progress.
 - Treatment #1
-•	Utilise Microsoft Intune to deploy and manage persistent VPN profiles that are required for any network connectivity on Windows 11 endpoints.
-•	Implement strict firewall rules on the local workstation image to block all outbound traffic except for established VPN tunnels to the SIG.
-•	Integrate endpoint telemetry with the agency SIEM to monitor for any attempted or successful network connections that bypass the approved gateway.
-Residual risk outcome if recommendation is implemented. The enforcement of a mandatory VPN ensures that all workstation traffic remains subject to the agency's robust gateway security controls, including IPS and content filtering. While the consequence of a data breach remains "Moderate," the likelihood of an successful exploit via direct internet access is reduced to "Unlikely" through the elimination of unencrypted or unmonitored egress paths.
+•	Deploy a "System Health Check" utility to every stand-alone workstation that provides a visual compliance status (e.g., green/amber/red) to the user based on the last successful update and scan.
+•	Mandate the use of encrypted portable media for the secure transfer of local audit logs to the agency SIEM or reporting portal to ensure data integrity during the "Sneakernet" process.
+•	Perform quarterly "Security Posture Validations" where an independent officer verifies that the local system state matches the data recorded in the agency's central asset and compliance registers.
+Residual risk outcome if recommendation is implemented.
+While the disconnected nature of these systems prevents real-time reporting, the implementation of a structured offline discovery and auditing regime provides the agency with sufficient visibility to manage the attack surface effectively. By formalising the collection of software and vulnerability data, the likelihood of an undetected security gap leading to a compromise is reduced to "Unlikely."
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MODERATE	=	
+UNLIKELY	x	MODERATE	=	MEDIUM
 
