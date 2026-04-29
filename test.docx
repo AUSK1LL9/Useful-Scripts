@@ -1,22 +1,23 @@
-•	
-7.1.1 - W11SR05: Insufficient Endpoint Application Control
+7.1.1 - W11SR06: Insufficient Cloud SaaS Backup and Restoration Capability
 ISM controls:
-•	0041; 0043; 1657 (Relating to the implementation and enforcement of application control).
-•	0329; 0330 (Relating to the restriction of administrative privileges and local administrator accounts).
-•	1416 (Relating to the validation of software integrity and application execution).
-Current Risk There is a risk that insufficient or ineffective implementation of endpoint application control and protection measures (specifically regarding the use of AirLocker or AppLocker for stand-alone workstations) could allow the execution of unapproved or malicious software. This may lead to a loss of data integrity, the exposure or exfiltration of sensitive information, or a significant loss of system availability across the Windows 11 fleet.
+•	1511; 1514 (Relating to the backup of important data and software to ensure business continuity).
+•	1515; 1516 (Relating to the regular testing of backup restoration processes).
+•	1703 (Relating to the development and maintenance of business continuity and disaster recovery plans).
+Current Risk
+There is a risk that an insufficient or ineffective Microsoft cloud SaaS backup solution—including inadequate restoration controls, processes, and tools—will significantly reduce the agency's business continuity objectives. Specifically, failure to meet Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO) for the Windows 11 management solution could lead to prolonged operational downtime and data loss following a cloud-side incident or accidental deletion.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 LIKELY	x	MODERATE	=	HIGH
 Recommendations:
-•	Mandatory Application Control Policy: Enforce a strict "Allow list" policy for all executable files, scripts, and installers on stand-alone workstations, ensuring only approved departmental software can run.
-•	Integrate with Intune/Endpoint Manager: Centralise the management of application control policies to ensure consistent enforcement and rapid deployment of updates across both networked and stand-alone devices.
-•	Removal of Local Administrative Rights: Ensure all users operate with standard user privileges to prevent the manual bypass of application control mechanisms and reduce the potential impact of malware.
+•	Implement a Third-Party SaaS Backup Solution: Deploy a dedicated backup platform (e.g., Veeam, Commvault, or Druva) that provides independent, off-site protection for M365 and Intune configuration data, separate from the primary Microsoft tenant.
+•	Formalise RTO and RPO Requirements: Define and document clear business continuity requirements specifically for the endpoint management plane to ensure restoration capabilities align with agency operational needs.
+•	Regular Restoration Drills: Establish a schedule for periodic restoration testing of critical tenant configurations and user data to validate the integrity of backups and the effectiveness of recovery procedures.
 - Treatment #1
-•	Implement AirLocker/AppLocker in "Enforce" mode with digital signature validation for all mission-critical applications.
-•	Conduct regular audits of application execution logs via a centralised SIEM or local log collector to identify attempted executions of unauthorised software.
-•	Establish a formalised process for the rapid assessment and "Allow listing" of new software requirements to prevent user circumvention of security controls.
-Residual risk outcome if recommendation is implemented. The implementation of robust application control and the removal of local administrative rights significantly reduces the attack surface of the Windows 11 environment. By ensuring that only verified, signed, and approved applications can execute, the likelihood of a malware-based incident is reduced to "Unlikely." While the consequence of a compromise remains "Moderate," the overall risk is brought within the agency's acceptable threshold.
+•	Configure automated daily backups of Intune policies, Entra ID objects, and SharePoint/OneDrive data with a minimum retention period of 12 months.
+•	Integrate backup status reporting into the departmental security operations dashboard to ensure immediate visibility of any backup failures.
+•	Develop a detailed "Cloud Recovery Playbook" that outlines step-by-step procedures for restoring the Windows 11 management environment in the event of a catastrophic tenant failure.
+Residual risk outcome if recommendation is implemented.
+The deployment of an independent backup solution and formalised recovery processes ensures that the agency is not solely reliant on Microsoft’s native "deleted item" retention. By validating recovery workflows through regular testing, the likelihood of failing to meet continuity objectives is reduced to "Unlikely." While the moderate consequence remains due to the inherent disruption of any restoration event, the overall risk is significantly mitigated.
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MODERATE	=	MEDIUM
+UNLIKELY	x	MODERATE	=	
 
