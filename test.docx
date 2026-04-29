@@ -1,38 +1,26 @@
-
-7.1.1 - W11SR01: Excessive Local Administrative Privileges on Stand-alone Workstations
+7.1.3 - M365SR01: Non-Compliance with M365 Hardening Blueprints
 ISM controls:
-
-Control: 1175; Revision: 4; Updated: Jun-21; Applicability: All; OS: All (Restricting administrative privileges)
-
-Control: 1507; Revision: 3; Updated: Dec-23; Applicability: All; OS: All (Privileged access to systems and applications)
-
-Control: 0957; Revision: 7; Updated: Sep-23; Applicability: All; OS: All (Restricting access to systems and applications)
-
+•	Control: 1560; Revision: 3; Updated: Dec-22; Applicability: All; OS: All (Configuration of cloud services)
+•	Control: 1506; Revision: 1; Updated: Jun-21; Applicability: All; OS: All (Evaluation of cloud service security)
+•	Control: 1564; Revision: 0; Updated: Sep-22; Applicability: All; OS: All (Securing cloud service administration)
+________________________________________
 Current Risk
-Insufficient implementation of user identity and access management processes and / or controls leads to a compromise of the system and its data. The excessive use of local Administrator rights for Stand-alone Workstations may lead to the compromise of the agency system and / or its data, including the ability to disable security functions and tools.
-
+Insufficient, incomplete implementation or deviation from the ASD and Microsoft System Hardening Blueprint controls for core M365 services (Entra ID, Microsoft 365, Intune, Defender, Purview, Teams as well as Exchange and SharePoint Online), resulting in the compromise of confidentiality, availability and integrity of agency systems, data and/or information.
 Risk Assessment:
-
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 ALMOST CERTAIN	x	MAJOR	=	EXTREME
+________________________________________
 Recommendations:
-
-Enforce Principle of Least Privilege: Remove local administrative rights from all standard user accounts on stand-alone workstations, ensuring users operate with standard user permissions for daily tasks.
-
-Implement Local Administrator Password Solution (LAPS): Use a managed solution to rotate and secure unique local administrator passwords for each workstation, preventing lateral movement.
-
-Formalise Privileged Access Management: Establish a strict approval process and audit trail for any temporary elevation of privileges required for technical maintenance.
-
+1.	Adopt Secure Configuration Baselines: Formally implement the ASD Microsoft 365 Blueprint and Microsoft’s best-practice security baselines across all active M365 services.
+2.	Continuous Compliance Monitoring: Utilize Microsoft Purview and Microsoft Defender for Cloud to provide real-time visibility into the tenant's security posture and drift from the hardening baseline.
+3.	Establish Configuration Governance: Implement a robust change management process that requires security impact assessments for any modifications to the core M365 security architecture.
 - Treatment #1
-
-Privileged User Audit: Conduct a comprehensive review of all current local accounts on stand-alone machines and immediately revoke unnecessary administrative memberships.
-
-Technical Policy Enforcement: Deploy local group policy objects (GPOs) or configuration profiles that explicitly define and restrict the members of the local "Administrators" group.
-
-Standard Operating Environment (SOE) Hardening: Update the stand-alone workstation SOE image to ensure that new deployments default to standard user profiles with no inherent administrative access.
-
+•	Baseline Alignment Audit: Perform a comprehensive gap analysis of the current M365 configuration against the ASD System Hardening Blueprint to identify and prioritize remediation of non-compliant settings.
+•	Technical Enforcement: Use Intune configuration profiles and Entra ID Conditional Access policies to programmatically enforce hardening controls across the identity and device planes.
+•	Automated Posture Alerts: Configure automated alerts within the Microsoft 365 Security Centre to notify administrators immediately when critical security settings are altered.
+________________________________________
 Residual risk outcome if recommendation is implemented.
-Removing standing administrative access significantly reduces the primary vector for system-wide compromise and the disabling of security tools. While the consequence of a potential compromise remains "Major" due to the sensitivity of the standalone environment, the likelihood is reduced from "Almost Certain" to "Rare," as an attacker would require an additional, high-complexity exploit to gain elevated persistence.
-
+Implementing a systematic hardening framework ensures that core services are protected by industry-standard defenses, closing common security gaps. While a sophisticated adversary may still attempt to target the platform, the reduction in reachable vulnerabilities lowers the likelihood of a successful, broad-scale compromise from "Almost Certain" to "Rare."
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-RARE	x	MAJOR	=	MEDIUM
+RARE	x	MAJOR	=	
+
