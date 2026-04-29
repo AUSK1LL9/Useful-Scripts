@@ -1,24 +1,24 @@
-7.1.1 - W11SR14: Ineffective Security Reporting and Compliance Data for Stand-alone Workstations
+7.1.1 - W11SR15: Ineffective Monitoring of Data Transfers for Stand-alone Workstations
 ISM controls:
-•	0013; 0015 (Relating to the security reporting to chief information security officers and service providers).
-•	0031; 0032 (Relating to the maintenance of system security plans and security assessment reports).
-•	1410; 1471 (Relating to the identification of installed software and configuration management).
-•	1494; 1495 (Relating to the identification and reporting of security vulnerabilities).
+•	0580; 1537 (Relating to the generation of event logs for data access and transfer).
+•	0600; 0601 (Relating to the control and monitoring of removable media usage).
+•	1405 (Relating to the analysis of event logs to detect security incidents).
+•	1540 (Relating to the retention of audit logs for forensic purposes).
 Current Risk
-Due to the periodic disconnected nature of stand-alone workstations, the agency may observe ineffective, inaccurate, or missing reporting and compliance data. This lack of telemetry prevents the effective management and identification of installed software versions, potential vulnerable software, and deployed software counts. This visibility gap leads to an increased attack surface and reduced security control, potentially resulting in a compromise of the confidentiality, integrity, or availability of the agency’s system and its data.
+Due to the periodic disconnected nature of the stand-alone workstations, the agency may observe ineffective, inaccurate, or missing data transfer logs related to data imported, exported, copied, and deleted between stand-alone workstations and other devices (such as removable media or peripheral assets). This creates a visibility gap that may lead to a decrease in the detection of insider threats, compromised systems leading to data leaks, and a general compromise of the confidentiality, integrity, or availability of the agency’s system and its data.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 LIKELY	x	MODERATE	=	HIGH
 Recommendations:
-•	Implement Offline Asset Discovery: Establish a mandatory process for the manual extraction of hardware and software inventories from stand-alone devices using approved, secure tools for ingestion into a centralised asset management database.
-•	Standardise Baseline Auditing: Use automated configuration audit scripts (e.g., PowerShell-based CIS or ASD baseline checkers) to generate local compliance reports that are reviewed during every physical maintenance cycle.
-•	Vulnerability Register for Stand-alone Assets: Maintain a dedicated, high-fidelity register of software vulnerabilities specifically for disconnected assets, cross-referenced with vendor security advisories to track patching progress.
+•	Implement Mandatory Removable Media Logging: Configure advanced local audit policies to specifically capture and store all file-level interactions with removable storage devices, including filenames and volume serial numbers.
+•	Establish a Data Transfer Custodianship: Implement a process where all data imports and exports to stand-alone environments must be performed through a designated "transfer station" that maintains a permanent, centralised audit log.
+•	Routine Forensic Log Reviews: Schedule periodic forensic reviews of local workstation logs to reconstruct data movement patterns and identify any unauthorised or anomalous transfer activity that occurred during disconnected periods.
 - Treatment #1
-•	Deploy a "System Health Check" utility to every stand-alone workstation that provides a visual compliance status (e.g., green/amber/red) to the user based on the last successful update and scan.
-•	Mandate the use of encrypted portable media for the secure transfer of local audit logs to the agency SIEM or reporting portal to ensure data integrity during the "Sneakernet" process.
-•	Perform quarterly "Security Posture Validations" where an independent officer verifies that the local system state matches the data recorded in the agency's central asset and compliance registers.
+•	Enforce "Write-Block" or "Read-Only" policies on all USB ports via Intune/GPO, requiring a formal exception and the use of agency-issued, encrypted media for any data export.
+•	Deploy Host-based Intrusion Detection System (HIDS) or File Integrity Monitoring (FIM) tools that generate persistent alerts for mass file deletions or exports, ensuring these are captured for manual retrieval.
+•	Integrate the manual log retrieval process with the agency's existing Insider Threat Program to ensure stand-alone workstation telemetry is included in broader behavioral analysis.
 Residual risk outcome if recommendation is implemented.
-While the disconnected nature of these systems prevents real-time reporting, the implementation of a structured offline discovery and auditing regime provides the agency with sufficient visibility to manage the attack surface effectively. By formalising the collection of software and vulnerability data, the likelihood of an undetected security gap leading to a compromise is reduced to "Unlikely."
+By formalising the data transfer process and ensuring granular local logging is captured and subsequently ingested into the agency SIEM, the window of "invisibility" is significantly narrowed. While the disconnected state prevents immediate intervention, the implementation of forensic-grade logging and physical transfer controls reduces the likelihood of an undetected data leak or insider threat event to "Unlikely."
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 UNLIKELY	x	MODERATE	=	MEDIUM
 
