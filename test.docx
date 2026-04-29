@@ -1,24 +1,24 @@
-W11SR11: Insufficient Identity and Access Management (IAM) Controls
+7.1.1 - W11SR12: Inadequate Management or Governance of AI Systems
 ISM controls:
-•	0411; 1173; 1504 (Relating to the identification and authorisation of users).
-•	0421; 0431 (Relating to the use of unique identification and strong authentication).
-•	0582; 0800 (Relating to the regular review of user access and privileges).
-•	1401; 1565 (Relating to the protection of authentication credentials and cloud identity security).
+•	1884; 1885; 1886 (Relating to the secure development and deployment of AI and machine learning systems).
+•	0013; 0015 (Relating to security governance and reporting).
+•	0041; 1657 (Relating to the approval and control of software applications).
+•	1644 (Relating to the use of approved cloud services, including AI-as-a-Service).
 Current Risk
-There is a risk that the insufficient implementation of user identity and access management (IAM) processes and controls for the Windows 11 environment will lead to a compromise of the system and its data. Specifically, a failure to strictly enforce the principle of least privilege, combined with inadequate authentication mechanisms or identity lifecycle management, could allow unauthorised individuals to gain access to sensitive departmental information or perform unauthorised system changes.
+There is a risk that inadequate management, oversight, or governance of AI systems integrated into the Windows 11 environment (such as Microsoft Copilot or third-party AI tools) may lead to significant security events. This includes data manipulation, privacy breaches through data leakage, or the malicious control of AI-driven systems. Such failures could compromise the confidentiality, integrity, or availability of the system and its associated data, especially when handling sensitive government information.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-LIKELY	x	MAJOR	=	HIGH
+LIKELY	x	MODERATE	=	HIGH
 Recommendations:
-•	Implement Multi-Factor Authentication (MFA): Mandate the use of MFA (utilising Windows Hello for Business or FIDO2 security keys) for all user and administrative access to Windows 11 endpoints and associated cloud services.
-•	Enforce the Principle of Least Privilege: Utilise Entra ID (Azure AD) Role-Based Access Control (RBAC) and Privileged Identity Management (PIM) to ensure users and administrators only have the minimum access required for their roles.
-•	Automated Identity Lifecycle Management: Integrate identity provisioning with departmental HR systems to ensure that access is automatically adjusted or revoked upon a change in a user's employment status or role.
+•	Establish an AI Governance Framework: Develop a formal policy governing the use of AI within the agency, ensuring all AI-driven features are assessed for privacy and security risks before being enabled on Windows 11 endpoints.
+•	Implement Data Loss Prevention (DLP) for AI: Configure Microsoft Purview and other DLP controls to prevent sensitive or classified data from being ingested by AI models or exported through unvetted AI prompts.
+•	Mandate AI Transparency and Explainability: Ensure all AI systems utilised have clear documentation regarding data usage, model training, and decision-making logic to facilitate effective security auditing.
 - Treatment #1
-•	Conduct a comprehensive audit of all existing administrative privileges and migrate to a "Just-In-Time" (JIT) elevation model for all management tasks.
-•	Deploy Conditional Access policies that evaluate device compliance and location before granting access to sensitive departmental resources.
-•	Establish a recurring quarterly access review process where the Relevant Authority must re-validate the access requirements for all users with elevated privileges.
+•	Disable all unvetted AI features (such as Copilot for Windows) via Intune/GPO until a comprehensive IRAP assessment has been completed and the risk is formally accepted.
+•	Conduct regular security reviews of AI "prompt logs" and output to identify potential misuse or attempts to bypass security boundaries (e.g., prompt injection).
+•	Integrate AI security posture management into the existing vulnerability management lifecycle to address emerging AI-specific vulnerabilities.
 Residual risk outcome if recommendation is implemented.
-The implementation of MFA and strict RBAC significantly reduces the likelihood of identity-based attacks succeeding. While the potential consequence of a compromise remains "Major" due to the nature of the data involved, the proactive enforcement of modern IAM controls reduces the likelihood to "Unlikely," bringing the overall risk within the departmental risk tolerance.
+By implementing strict governance and technical DLP controls, the agency can leverage AI capabilities while maintaining a defensible security posture. While the inherent complexity of AI systems keeps the consequence at "Moderate," the likelihood of a successful exploit or data breach is reduced to "Unlikely" through proactive monitoring and restricted deployment.
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MAJOR	=	HIGH
+UNLIKELY	x	MODERATE	=	MEDIUM
 
