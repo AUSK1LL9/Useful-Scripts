@@ -1,26 +1,38 @@
-7.1.14 - M365SR14: Unmanaged Feature Updates and Lifecycle Changes
+
+7.1.1 - W11SR01: Excessive Local Administrative Privileges on Stand-alone Workstations
 ISM controls:
-•	Control: 0314; Revision: 6; Updated: Jun-21; Applicability: All; OS: All (Change management processes)
-•	Control: 1560; Revision: 3; Updated: Dec-22; Applicability: All; OS: All (Configuration of cloud services)
-•	Control: 1506; Revision: 1; Updated: Jun-21; Applicability: All; OS: All (Evaluation of cloud service security)
-________________________________________
+
+Control: 1175; Revision: 4; Updated: Jun-21; Applicability: All; OS: All (Restricting administrative privileges)
+
+Control: 1507; Revision: 3; Updated: Dec-23; Applicability: All; OS: All (Privileged access to systems and applications)
+
+Control: 0957; Revision: 7; Updated: Sep-23; Applicability: All; OS: All (Restricting access to systems and applications)
+
 Current Risk
-Microsoft regularly add and remove features from M365 which may impact the agency in the form of introducing new vulnerabilities or impacting production services affecting the integrity, confidentiality, or availability of agency information.
+Insufficient implementation of user identity and access management processes and / or controls leads to a compromise of the system and its data. The excessive use of local Administrator rights for Stand-alone Workstations may lead to the compromise of the agency system and / or its data, including the ability to disable security functions and tools.
+
 Risk Assessment:
+
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MAJOR	=	MEDIUM
-________________________________________
+ALMOST CERTAIN	x	MAJOR	=	EXTREME
 Recommendations:
-1.	Establish a Cloud Change Advisory Board (CCAB): Create a dedicated cross-functional team to review the Microsoft 365 Roadmap and Message Centre updates weekly to assess impact before features are rolled out to production.
-2.	Utilise Targeted Release Wings: Configure a subset of "Early Adopter" users in a targeted release ring to validate new features and identify potential security or stability issues before global deployment.
-3.	Standardise Security Impact Assessments: Mandate a brief security review for any major feature changes (e.g., new collaborative apps or generative AI integrations) to ensure they align with existing governance and ISM compliance.
+
+Enforce Principle of Least Privilege: Remove local administrative rights from all standard user accounts on stand-alone workstations, ensuring users operate with standard user permissions for daily tasks.
+
+Implement Local Administrator Password Solution (LAPS): Use a managed solution to rotate and secure unique local administrator passwords for each workstation, preventing lateral movement.
+
+Formalise Privileged Access Management: Establish a strict approval process and audit trail for any temporary elevation of privileges required for technical maintenance.
+
 - Treatment #1
-•	Automated Roadmap Monitoring: Use PowerShell or API integration to pull Message Centre updates into a centralised tracking system (e.g., Jira or ServiceNow) for formal architectural sign-off.
-•	Governance Documentation: Maintain a "Service Definition Document" that lists all enabled M365 services and the specific risk decisions made for disabled features.
-•	Continuous Configuration Auditing: Deploy automated tools like Microsoft Purview or third-party posture management (SSPM) to detect and alert on new default settings introduced by Microsoft updates.
-________________________________________
+
+Privileged User Audit: Conduct a comprehensive review of all current local accounts on stand-alone machines and immediately revoke unnecessary administrative memberships.
+
+Technical Policy Enforcement: Deploy local group policy objects (GPOs) or configuration profiles that explicitly define and restrict the members of the local "Administrators" group.
+
+Standard Operating Environment (SOE) Hardening: Update the stand-alone workstation SOE image to ensure that new deployments default to standard user profiles with no inherent administrative access.
+
 Residual risk outcome if recommendation is implemented.
-Proactive monitoring and a structured release process allow the agency to intercept potentially disruptive or insecure feature changes before they impact the wider environment. While the consequence of a platform change remains "Major" due to potential operational downtime, the likelihood of an unmanaged change causing a security incident is reduced to "Rare."
+Removing standing administrative access significantly reduces the primary vector for system-wide compromise and the disabling of security tools. While the consequence of a potential compromise remains "Major" due to the sensitivity of the standalone environment, the likelihood is reduced from "Almost Certain" to "Rare," as an attacker would require an additional, high-complexity exploit to gain elevated persistence.
+
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 RARE	x	MAJOR	=	MEDIUM
-
