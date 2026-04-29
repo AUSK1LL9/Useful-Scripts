@@ -1,23 +1,23 @@
-7.1.1 - W11SR07: Ineffective Patch Management for Stand-alone Workstations
+7.1.1 - W11SR08: Ineffective SIAM Integration and Access Governance
 ISM controls:
-•	1144; 1145; 1146 (Relating to the timely application of security patches for operating systems and applications).
-•	1410; 1471 (Relating to system configuration management and software update processes).
-•	1494 (Relating to the identification of security vulnerabilities in software).
+•	1173; 1504; 1505 (Relating to the management of user access requests and authorisations).
+•	0421; 0422 (Relating to the use of automated mechanisms to support user account management).
+•	0582; 0800 (Relating to the regular review of access permissions and system privileges).
 Current Risk
-The inability to manage and observe stand-alone workstations leads to significant configuration drift and the failure to apply critical security updates. There is a risk that OS and application patch management will be ineffectively executed for these disconnected assets, leaving known vulnerabilities unaddressed and resulting in an increased likelihood of system compromise and unauthorised data access.
+The lack of effective Service Integration and Management (SIAM) processes and procedures—specifically concerning automated access request workflows within Ivanti Neurons—presents a significant security gap. Without robust, automated approval and actioning cycles, there is a risk of unauthorised or misconfigured system and user access being granted, leading to a compromise of the confidentiality, integrity, or availability of departmental systems and data.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 LIKELY	x	MODERATE	=	HIGH
 Recommendations:
-•	Establish an Offline Patching Lifecycle: Implement a formalised, recurring process for the manual ingestion and deployment of Microsoft Cumulative Updates and third-party application patches to all stand-alone workstations.
-•	Vulnerability Scanning via Portable Media: Utilise approved portable scanning tools to periodically assess the vulnerability status of stand-alone devices, ensuring they meet the agency's mandatory patching timelines (e.g., 48-hour or 14-day requirements).
-•	Centralised Asset Compliance Register: Maintain a high-fidelity register of the exact build numbers and patch levels of all stand-alone assets to facilitate reporting and risk oversight.
+•	Formalise SIAM Access Workflows: Develop and document end-to-end SIAM procedures that define clear ownership and approval authorities for all Windows 11 and Microsoft 365 access requests.
+•	Integrate Ivanti Neurons with Identity Providers: Fully automate the provisioning and de-provisioning of accounts by integrating Ivanti Neurons with Entra ID (Azure AD), ensuring access is automatically revoked when a user’s status changes.
+•	Implement Just-In-Time (JIT) Access: Utilise automated workflows to provide time-bound, elevated access where required, reducing the persistence of high-privileged accounts across the management plane.
 - Treatment #1
-•	Develop a secure "clean-room" or "bridge" environment for downloading and verifying the integrity of update files before they are transferred to the stand-alone environment.
-•	Implement scripted update deployments (e.g., via PowerShell) to ensure patches are applied consistently and that success/failure logs are captured for audit.
-•	Mandatory decommissioning or isolation of any stand-alone workstation that cannot be patched within the timeframe specified in the ISM or departmental policy.
+•	Configure Ivanti Neurons to mandate multi-stage approvals for high-risk access requests, ensuring a clear audit trail is maintained for every authorisation.
+•	Perform monthly automated reconciliation between the SIAM request logs and the actual active accounts in Entra ID/Intune to identify and remediate "ghost" accounts or privilege creep.
+•	Implement automated alerting for any access changes that bypass the formal SIAM process, enabling rapid response by the security operations team.
 Residual risk outcome if recommendation is implemented.
-While patching stand-alone systems remains a manual and resource-intensive task, the implementation of a structured, verified offline update process significantly mitigates the risk of unpatched vulnerabilities. By providing a clear mechanism for vulnerability identification and remediation, the likelihood of a compromise is reduced to "Unlikely."
+The transition from manual or ad-hoc access management to a formalised, automated SIAM model significantly reduces the window of opportunity for unauthorised access. By ensuring all access is approved, logged, and automatically provisioned/de-provisioned, the likelihood of a compromise due to access misconfiguration is lowered to "Unlikely."
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 UNLIKELY	x	MODERATE	=	MEDIUM
 
