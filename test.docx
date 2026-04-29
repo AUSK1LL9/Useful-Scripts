@@ -1,26 +1,26 @@
-7.1.3 - M365SR01: Non-Compliance with M365 Hardening Blueprints
+7.1.2 - W11SR02: Non-Compliance with Windows 11 Hardening Blueprints
 ISM controls:
-•	Control: 1560; Revision: 3; Updated: Dec-22; Applicability: All; OS: All (Configuration of cloud services)
-•	Control: 1506; Revision: 1; Updated: Jun-21; Applicability: All; OS: All (Evaluation of cloud service security)
-•	Control: 1564; Revision: 0; Updated: Sep-22; Applicability: All; OS: All (Securing cloud service administration)
+•	Control: 1416; Revision: 3; Updated: Dec-22; Applicability: All; OS: All (Hardening standard operating environments)
+•	Control: 1448; Revision: 3; Updated: Dec-22; Applicability: All; OS: All (Configuring operating systems)
+•	Control: 0314; Revision: 6; Updated: Jun-21; Applicability: All; OS: All (Change management processes)
 ________________________________________
 Current Risk
-Insufficient, incomplete implementation or deviation from the ASD and Microsoft System Hardening Blueprint controls for core M365 services (Entra ID, Microsoft 365, Intune, Defender, Purview, Teams as well as Exchange and SharePoint Online), resulting in the compromise of confidentiality, availability and integrity of agency systems, data and/or information.
+Insufficient, incomplete implementation or deviation from the ASD and Microsoft Authentication and System Hardening Blueprint for Windows 11, may lead to compromise of the agency system and / or its data.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 ALMOST CERTAIN	x	MAJOR	=	EXTREME
 ________________________________________
 Recommendations:
-1.	Adopt Secure Configuration Baselines: Formally implement the ASD Microsoft 365 Blueprint and Microsoft’s best-practice security baselines across all active M365 services.
-2.	Continuous Compliance Monitoring: Utilize Microsoft Purview and Microsoft Defender for Cloud to provide real-time visibility into the tenant's security posture and drift from the hardening baseline.
-3.	Establish Configuration Governance: Implement a robust change management process that requires security impact assessments for any modifications to the core M365 security architecture.
+1.	Mandate Baseline Alignment: Formally adopt the Australian Signals Directorate (ASD) Windows 11 Hardening Blueprint as the mandatory minimum security standard for all agency workstations.
+2.	Automated Compliance Auditing: Deploy configuration management tools (e.g., Microsoft Intune or Group Policy Analytics) to continuously monitor and report on deviations from the established hardening baseline.
+3.	Establish Exception Governance: Implement a formal risk-acceptance process for any technical requirements that necessitate a deviation from the hardening blueprint, ensuring such risks are reviewed annually.
 - Treatment #1
-•	Baseline Alignment Audit: Perform a comprehensive gap analysis of the current M365 configuration against the ASD System Hardening Blueprint to identify and prioritize remediation of non-compliant settings.
-•	Technical Enforcement: Use Intune configuration profiles and Entra ID Conditional Access policies to programmatically enforce hardening controls across the identity and device planes.
-•	Automated Posture Alerts: Configure automated alerts within the Microsoft 365 Security Centre to notify administrators immediately when critical security settings are altered.
+•	Baseline Deployment: Utilise Microsoft Security Compliance Toolkit to apply recommended security baselines to all Windows 11 endpoints, covering kernel DMA protection, virtualization-based security, and credential guard.
+•	Security Feature Enforcement: Enable hardware-backed security features including TPM 2.0, Secure Boot, and UEFI protection to establish a root of trust.
+•	Vulnerability Management Integration: Link hardening compliance data to the agency’s vulnerability management platform to prioritise remediation of non-compliant assets.
 ________________________________________
 Residual risk outcome if recommendation is implemented.
-Implementing a systematic hardening framework ensures that core services are protected by industry-standard defenses, closing common security gaps. While a sophisticated adversary may still attempt to target the platform, the reduction in reachable vulnerabilities lowers the likelihood of a successful, broad-scale compromise from "Almost Certain" to "Rare."
+Aligning the workstation environment with industry-recognised hardening blueprints significantly raises the cost for an adversary to gain a foothold. While the "Major" consequence of a system compromise remains due to the nature of agency information, the systematic application of technical controls reduces the likelihood of a successful exploit from "Almost Certain" to "Rare."
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-RARE	x	MAJOR	=	
+RARE	x	MAJOR	=	MEDIUM
 
