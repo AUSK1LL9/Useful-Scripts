@@ -1,24 +1,24 @@
-7.1.1 - W11SR16: Inadequate Email Classification and DLP Management
+7.1.1 - W11SR14: Ineffective Security Reporting and Compliance Data for Stand-alone Workstations
 ISM controls:
-•	0553; 1234 (Relating to the use of protective markings and email classification).
-•	0607; 0608 (Relating to the implementation and monitoring of Data Loss Prevention (DLP) controls).
-•	1148 (Relating to the filtering of incoming and outgoing email for malicious or unauthorised content).
-•	1540 (Relating to the retention of logs for security and data spill investigations).
+•	0013; 0015 (Relating to the security reporting to chief information security officers and service providers).
+•	0031; 0032 (Relating to the maintenance of system security plans and security assessment reports).
+•	1410; 1471 (Relating to the identification of installed software and configuration management).
+•	1494; 1495 (Relating to the identification and reporting of security vulnerabilities).
 Current Risk
-There is a risk that the inadequate management of email classification and Data Loss Prevention (DLP) systems within the Windows 11 and Microsoft 365 environment will lead to the accidental or malicious exposure and exfiltration of sensitive information. In the event of a data spill, a lack of robust classification and monitoring tools could result in significant agency reputational damage and legal non-compliance with government data protection standards.
+Due to the periodic disconnected nature of stand-alone workstations, the agency may observe ineffective, inaccurate, or missing reporting and compliance data. This lack of telemetry prevents the effective management and identification of installed software versions, potential vulnerable software, and deployed software counts. This visibility gap leads to an increased attack surface and reduced security control, potentially resulting in a compromise of the confidentiality, integrity, or availability of the agency’s system and its data.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-LIKELY	x	MAJOR	=	HIGH
+LIKELY	x	MODERATE	=	HIGH
 Recommendations:
-•	Deploy Mandatory Sensitivity Labelling: Implement Microsoft Information Protection (MIP) sensitivity labels that mandate users classify every email and document before it can be sent or saved.
-•	Automate DLP Policies: Configure automated DLP rules in Microsoft Purview to detect and block the transmission of sensitive data (e.g., TFNs, medical records, or specific departmental keywords) to external or unauthorised recipients.
-•	User Data Handling Education: Conduct regular, mandatory training for all staff on the correct application of protective markings and the importance of adhering to DLP policies for agency data.
+•	Implement Offline Asset Discovery: Establish a mandatory process for the manual extraction of hardware and software inventories from stand-alone devices using approved, secure tools for ingestion into a centralised asset management database.
+•	Standardise Baseline Auditing: Use automated configuration audit scripts (e.g., PowerShell-based CIS or ASD baseline checkers) to generate local compliance reports that are reviewed during every physical maintenance cycle.
+•	Vulnerability Register for Stand-alone Assets: Maintain a dedicated, high-fidelity register of software vulnerabilities specifically for disconnected assets, cross-referenced with vendor security advisories to track patching progress.
 - Treatment #1
-•	Enforce technical controls that prevent the sending of any email with an "External" recipient if the content is marked with a classification higher than "OFFICIAL".
-•	Integrate email security alerts into the centralised SIEM (Splunk) to provide real-time visibility into attempted data breaches or classification overrides.
-•	Develop a formal Data Spill Management Plan that includes automated "Search and Purge" scripts to rapidly contain and remediate any classified data that is incorrectly shared via email.
+•	Deploy a "System Health Check" utility to every stand-alone workstation that provides a visual compliance status (e.g., green/amber/red) to the user based on the last successful update and scan.
+•	Mandate the use of encrypted portable media for the secure transfer of local audit logs to the agency SIEM or reporting portal to ensure data integrity during the "Sneakernet" process.
+•	Perform quarterly "Security Posture Validations" where an independent officer verifies that the local system state matches the data recorded in the agency's central asset and compliance registers.
 Residual risk outcome if recommendation is implemented.
-The implementation of automated classification and strict DLP blocking significantly reduces the probability of a data spill occurring through negligence or technical oversight. By ensuring that sensitive information is technically constrained and that users are prompted to apply correct labels, the likelihood of a major exposure event is reduced to "Unlikely". While the potential consequence of a spill remains "Major" due to the sensitivity of government data, the overall risk is brought within the agency's tolerance levels.
+While the disconnected nature of these systems prevents real-time reporting, the implementation of a structured offline discovery and auditing regime provides the agency with sufficient visibility to manage the attack surface effectively. By formalising the collection of software and vulnerability data, the likelihood of an undetected security gap leading to a compromise is reduced to "Unlikely."
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MAJOR	=	HIGH
+UNLIKELY	x	MODERATE	=	
 
