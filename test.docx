@@ -1,23 +1,22 @@
-7.1.1 - W11SR06: Insufficient Cloud SaaS Backup and Restoration Capability
+•	
+7.1.1 - W11SR07: Lack of Visibility and Configuration Drift on Stand-alone Workstations
 ISM controls:
-•	1511; 1514 (Relating to the backup of important data and software to ensure business continuity).
-•	1515; 1516 (Relating to the regular testing of backup restoration processes).
-•	1703 (Relating to the development and maintenance of business continuity and disaster recovery plans).
-Current Risk
-There is a risk that an insufficient or ineffective Microsoft cloud SaaS backup solution—including inadequate restoration controls, processes, and tools—will significantly reduce the agency's business continuity objectives. Specifically, failure to meet Recovery Time Objectives (RTO) and Recovery Point Objectives (RPO) for the Windows 11 management solution could lead to prolonged operational downtime and data loss following a cloud-side incident or accidental deletion.
+•	1410; 1471 (Relating to the management of system configurations and software updates).
+•	1494; 1495 (Relating to the identification and management of security vulnerabilities).
+•	1510 (Relating to the routine assessment of system security posture).
+Current Risk There is a risk that an inability to effectively manage and observe the security state of stand-alone workstations will cause significant configuration drift over time. This lack of visibility may lead to security vulnerabilities being ineffectively patched or managed, resulting in an increased risk of system compromise and the potential loss or corruption of departmental data.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 LIKELY	x	MODERATE	=	HIGH
 Recommendations:
-•	Implement a Third-Party SaaS Backup Solution: Deploy a dedicated backup platform (e.g., Veeam, Commvault, or Druva) that provides independent, off-site protection for M365 and Intune configuration data, separate from the primary Microsoft tenant.
-•	Formalise RTO and RPO Requirements: Define and document clear business continuity requirements specifically for the endpoint management plane to ensure restoration capabilities align with agency operational needs.
-•	Regular Restoration Drills: Establish a schedule for periodic restoration testing of critical tenant configurations and user data to validate the integrity of backups and the effectiveness of recovery procedures.
+•	Implement Offline Management Tools: Deploy technical solutions designed for disconnected environments (such as Microsoft Configuration Manager with offline media or scripted baselines) to enforce consistent security configurations.
+•	Establish Periodic Compliance Audits: Implement a mandatory physical audit schedule where stand-alone devices are checked against a "Gold Image" or security baseline using automated scanning tools.
+•	Centralised Vulnerability Tracking: Maintain a manual or air-gapped register of software versions and patch levels for all stand-alone assets to ensure no device falls outside of supported security windows.
 - Treatment #1
-•	Configure automated daily backups of Intune policies, Entra ID objects, and SharePoint/OneDrive data with a minimum retention period of 12 months.
-•	Integrate backup status reporting into the departmental security operations dashboard to ensure immediate visibility of any backup failures.
-•	Develop a detailed "Cloud Recovery Playbook" that outlines step-by-step procedures for restoring the Windows 11 management environment in the event of a catastrophic tenant failure.
-Residual risk outcome if recommendation is implemented.
-The deployment of an independent backup solution and formalised recovery processes ensures that the agency is not solely reliant on Microsoft’s native "deleted item" retention. By validating recovery workflows through regular testing, the likelihood of failing to meet continuity objectives is reduced to "Unlikely." While the moderate consequence remains due to the inherent disruption of any restoration event, the overall risk is significantly mitigated.
+•	Utilise the Microsoft Security Compliance Toolkit to apply and verify hardended GPO baselines on all stand-alone endpoints.
+•	Develop a robust "Sneakernet" process for the secure transfer and installation of monthly quality and security updates to disconnected systems.
+•	Implement local logging and integrity checking tools (e.g., File Integrity Monitoring) to detect unauthorised configuration changes between audit cycles.
+Residual risk outcome if recommendation is implemented. By establishing formal offline update procedures and a rigorous audit regime, the agency gains the necessary "observation" capability to identify and rectify configuration drift. While the management of stand-alone systems remains more resource-intensive than networked equivalents, the likelihood of unmanaged vulnerabilities leading to a compromise is reduced to "Unlikely."
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MODERATE	=	
+UNLIKELY	x	MODERATE	=	MEDIUM
 
