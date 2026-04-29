@@ -1,26 +1,22 @@
-7.1.5 - W11SR03: Ineffective Microsoft Cloud SaaS Backup and Versioning
+7.1.1 - W11SR04: Reputational Damage and Regulatory Scrutiny
 ISM controls:
-•	Control: 1515; Revision: 1; Updated: Sep-22; Applicability: All; OS: All (Backup of data in cloud services)
-•	Control: 1516; Revision: 1; Updated: Sep-22; Applicability: All; OS: All (Restoration of data in cloud services)
-•	Control: 1653; Revision: 0; Updated: Dec-23; Applicability: All; OS: All (Independent verification of data integrity in cloud services)
-________________________________________
-Current Risk
-Insufficient or ineffective Microsoft cloud SaaS configurations, settings and version history backups, including point-in-time backups, to a secure, appropriately controlled, encrypted backup destination, may result in Windows 11 dependent systems being unavailable or unrecoverable in the event of a cloud tenancy compromise, malicious insider, or accidental configuration change.
+•	0013; 0015 (Relating to continuous security monitoring and reporting to chief information security officers).
+•	0031; 0032 (Relating to the maintenance of an accurate system security plan and security assessment report).
+Current Risk There is a risk that a significant cyber incident or a perceived failure to comply with mandatory government security policies (such as the Essential Eight or the PSPF) during the Windows 11 rollout could cause substantial harm to the Department's reputation. Such a failure could lead to intrusive external audits, public criticism, or the requirement to appear before Senate hearings to justify security posturing and investment decisions.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 POSSIBLE	x	MAJOR	=	HIGH
-________________________________________
+Export to Sheets
 Recommendations:
-1.	Implement Independent SaaS Backup: Procure a third-party cloud-to-cloud backup solution to maintain immutable, encrypted copies of M365 data (Exchange, SharePoint, OneDrive) outside of the primary Microsoft ecosystem.
-2.	Enforce Granular Point-in-Time Recovery: Configure automated daily backups with retention policies that satisfy agency Business Continuity Plan (BCP) requirements for point-in-time restoration.
-3.	Establish Secure Backup Residency: Ensure the backup destination is geographically restricted to Australia and utilizes separate, hardened credentials to prevent a single tenant compromise from affecting backup integrity.
+•	Rigorous Governance Framework: Establish a formal project governance board to oversee the migration, ensuring all security milestones are transparently documented and signed off by the Relevant Authority.
+•	Proactive Stakeholder Engagement: Maintain regular briefing cycles with departmental leadership and relevant central agencies to communicate progress and proactively manage expectations regarding compliance.
+•	Independent Security Assessments: Commission regular, independent IRAP assessments throughout the deployment phases to provide external validation of the security controls and compliance status.
 - Treatment #1
-•	Third-Party Integration: Deploy a backup solution (e.g., Veeam or AvePoint) specifically designed for SaaS workloads to protect against accidental deletion or malicious encryption.
-•	Verification Drills: Perform quarterly data restoration tests to verify the integrity of backed-up information and the effectiveness of the recovery process for Windows 11 dependent services.
-•	Encryption Management: Ensure all backup data is encrypted at rest using agency-managed keys within a sovereign or appropriately controlled environment.
-________________________________________
-Residual risk outcome if recommendation is implemented.
-Establishing an independent, off-site backup for SaaS data removes the reliance on Microsoft’s native recovery tools, which are often limited in scope. While the "Major" consequence of a system outage remains, the likelihood of permanent data loss or prolonged unavailability is reduced to "Rare."
+•	Develop a comprehensive communications and incident response plan specifically tailored to address public and parliamentary scrutiny following a security event.
+•	Implement a continuous compliance monitoring toolset to provide real-time reporting against the ISM and Essential Eight maturity levels.
+•	Maintain an evidence-based repository of all security design decisions and risk acceptances to ensure defensibility during external audits or inquiries.
+Residual risk outcome if recommendation is implemented. By implementing robust governance, independent validation, and proactive reporting, the Department can demonstrate "due diligence" in its security approach. While the consequence of a public inquiry remains "Major," the likelihood of such an event occurring due to negligence or lack of oversight is reduced to "Unlikely," as the Department will have a defensible and transparent security posture.
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-RARE	x	MAJOR	=	MEDIUM
+UNLIKELY	x	MAJOR	=	HIGH
+Export to Sheets
 
