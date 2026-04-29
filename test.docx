@@ -1,23 +1,23 @@
-W11SR09: Inadequate System Logging for Stand-alone Workstations
+7.1.1 - W11SR10: Ineffective Credential Management for Stand-alone Workstations
 ISM controls:
-•	0580; 0582 (Relating to the generation and content of event logs).
-•	0988; 1405 (Relating to the centralised collection and analysis of event logs).
-•	1540 (Relating to the retention of event logs for incident investigation).
+•	0421; 0431; 0433 (Relating to the enforcement of password complexity, length, and rotation).
+•	0974; 1173 (Relating to the management of local administrative accounts and credentials).
+•	1401 (Relating to the secure storage and protection of authentication credentials).
 Current Risk
-There is a risk that inadequate system logging, caused by the lack of centralised logging ingestion into the agency SIEM (Splunk) for stand-alone workstations, will significantly hinder security operations. The absence of real-time or aggregate log visibility will lead to delayed incident detection and response for malicious threats targeting these endpoint devices, potentially allowing an adversary to maintain persistence undetected.
+A lack of effective password credential management—specifically regarding complexity, length, and rotation frequency—on stand-alone workstations presents a significant security vulnerability. For both local privileged and unprivileged accounts, the absence of enforced credential policies may lead to poor credential hygiene. This increases the risk of brute-force attacks or credential harvesting, potentially leading to the compromise of the confidentiality, integrity, or availability of the agency’s system and its data.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-ALMOST CERTAIN	x	MODERATE	=	HIGH
+LIKELY	x	MODERATE	=	HIGH
 Recommendations:
-•	Implement Offline Log Aggregation: Establish a recurring "Sneakernet" process to manually extract event logs from stand-alone workstations using secure, encrypted portable media for ingestion into the centralised Splunk instance.
-•	Enforce Local Verbose Logging: Configure advanced audit policies on all stand-alone Windows 11 images to ensure critical security events (e.g., process creation, privilege use, and network connections) are captured locally even when disconnected.
-•	Deploy Local Log Analysis Tools: Utilise local scripts or lightweight, air-gapped analysis tools on the workstations to provide immediate, on-device alerting for common indicators of compromise (IoCs).
+•	Enforce Hardened Password Policies: Apply Group Policy Objects (GPO) or local security policies to all stand-alone images that mandate a minimum of 14 characters, complex character sets, and a defined rotation period in line with the ISM.
+•	Implement Local Administrator Password Solution (LAPS): Where feasible for the environment, utilise a mechanism to ensure local administrator passwords are unique to each workstation and rotated automatically to prevent lateral movement.
+•	User Security Awareness: Provide targeted guidance to users of stand-alone systems on the importance of unique, complex passphrases and the risks associated with credential sharing or improper storage.
 - Treatment #1
-•	Standardise local event log sizes and rotation policies to ensure at least 90 days of security events are retained on the device until the next manual ingestion cycle.
-•	Utilise the Splunk Universal Forwarder in a "batch" configuration for offline environments to facilitate the structured import of log data during audit intervals.
-•	Conduct monthly forensic "spot checks" on a representative sample of stand-alone workstations to validate that log integrity is maintained and no gaps in visibility exist.
+•	Utilise the Microsoft Security Compliance Toolkit to deploy hardened account lockout and password history policies on all Windows 11 stand-alone endpoints.
+•	Implement a "Physical Security Audit" process where local credential configurations are verified against the system security plan during quarterly inspections.
+•	Mandate the use of approved, encrypted hardware-based password managers for users who must manage multiple local credentials in disconnected environments.
 Residual risk outcome if recommendation is implemented.
-While real-time alerting remains impossible for truly disconnected systems, the implementation of a structured manual ingestion process and hardened local logging policies provides a viable audit trail. This reduces the likelihood of an incident remaining completely undetected for an indefinite period to "Unlikely." The consequence remains "Moderate" due to the inherent delay in response compared to networked systems.
+Enforcing technical password constraints and ensuring unique local administrative credentials significantly reduces the efficacy of automated password attacks. While the management overhead of stand-alone accounts remains a factor, the likelihood of a successful credential-based compromise is reduced to "Unlikely." The consequence remains "Moderate," reflecting the potential impact of a single-system compromise.
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MODERATE	=	
+UNLIKELY	x	MODERATE	=	MEDIUM
 
