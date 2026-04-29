@@ -1,23 +1,23 @@
-7.1.1 - W11SR08: Ineffective SIAM Integration and Access Governance
+W11SR09: Inadequate System Logging for Stand-alone Workstations
 ISM controls:
-•	1173; 1504; 1505 (Relating to the management of user access requests and authorisations).
-•	0421; 0422 (Relating to the use of automated mechanisms to support user account management).
-•	0582; 0800 (Relating to the regular review of access permissions and system privileges).
+•	0580; 0582 (Relating to the generation and content of event logs).
+•	0988; 1405 (Relating to the centralised collection and analysis of event logs).
+•	1540 (Relating to the retention of event logs for incident investigation).
 Current Risk
-The lack of effective Service Integration and Management (SIAM) processes and procedures—specifically concerning automated access request workflows within Ivanti Neurons—presents a significant security gap. Without robust, automated approval and actioning cycles, there is a risk of unauthorised or misconfigured system and user access being granted, leading to a compromise of the confidentiality, integrity, or availability of departmental systems and data.
+There is a risk that inadequate system logging, caused by the lack of centralised logging ingestion into the agency SIEM (Splunk) for stand-alone workstations, will significantly hinder security operations. The absence of real-time or aggregate log visibility will lead to delayed incident detection and response for malicious threats targeting these endpoint devices, potentially allowing an adversary to maintain persistence undetected.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-LIKELY	x	MODERATE	=	HIGH
+ALMOST CERTAIN	x	MODERATE	=	HIGH
 Recommendations:
-•	Formalise SIAM Access Workflows: Develop and document end-to-end SIAM procedures that define clear ownership and approval authorities for all Windows 11 and Microsoft 365 access requests.
-•	Integrate Ivanti Neurons with Identity Providers: Fully automate the provisioning and de-provisioning of accounts by integrating Ivanti Neurons with Entra ID (Azure AD), ensuring access is automatically revoked when a user’s status changes.
-•	Implement Just-In-Time (JIT) Access: Utilise automated workflows to provide time-bound, elevated access where required, reducing the persistence of high-privileged accounts across the management plane.
+•	Implement Offline Log Aggregation: Establish a recurring "Sneakernet" process to manually extract event logs from stand-alone workstations using secure, encrypted portable media for ingestion into the centralised Splunk instance.
+•	Enforce Local Verbose Logging: Configure advanced audit policies on all stand-alone Windows 11 images to ensure critical security events (e.g., process creation, privilege use, and network connections) are captured locally even when disconnected.
+•	Deploy Local Log Analysis Tools: Utilise local scripts or lightweight, air-gapped analysis tools on the workstations to provide immediate, on-device alerting for common indicators of compromise (IoCs).
 - Treatment #1
-•	Configure Ivanti Neurons to mandate multi-stage approvals for high-risk access requests, ensuring a clear audit trail is maintained for every authorisation.
-•	Perform monthly automated reconciliation between the SIAM request logs and the actual active accounts in Entra ID/Intune to identify and remediate "ghost" accounts or privilege creep.
-•	Implement automated alerting for any access changes that bypass the formal SIAM process, enabling rapid response by the security operations team.
+•	Standardise local event log sizes and rotation policies to ensure at least 90 days of security events are retained on the device until the next manual ingestion cycle.
+•	Utilise the Splunk Universal Forwarder in a "batch" configuration for offline environments to facilitate the structured import of log data during audit intervals.
+•	Conduct monthly forensic "spot checks" on a representative sample of stand-alone workstations to validate that log integrity is maintained and no gaps in visibility exist.
 Residual risk outcome if recommendation is implemented.
-The transition from manual or ad-hoc access management to a formalised, automated SIAM model significantly reduces the window of opportunity for unauthorised access. By ensuring all access is approved, logged, and automatically provisioned/de-provisioned, the likelihood of a compromise due to access misconfiguration is lowered to "Unlikely."
+While real-time alerting remains impossible for truly disconnected systems, the implementation of a structured manual ingestion process and hardened local logging policies provides a viable audit trail. This reduces the likelihood of an incident remaining completely undetected for an indefinite period to "Unlikely." The consequence remains "Moderate" due to the inherent delay in response compared to networked systems.
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MODERATE	=	MEDIUM
+UNLIKELY	x	MODERATE	=	
 
