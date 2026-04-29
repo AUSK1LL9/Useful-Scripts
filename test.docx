@@ -1,22 +1,23 @@
-•	
-7.1.1 - W11SR17: Lack of Key Security Documentation
+7.1.1 - W11SR18: Ineffective SIAM Processes for Identity Lifecycle Management
 ISM controls:
-•	0031; 0032 (Relating to the development and maintenance of a System Security Plan (SSP) and Security Assessment Report (SAR)).
-•	0041 (Relating to the authorisation of a system to operate by a designated authority).
-•	0100 (Relating to the development and maintenance of an incident response plan).
-•	0144 (Relating to the development and maintenance of a system's configuration management plan (CMP)).
-Current Risk Key security documentation, including the System Security Plan (SSP), Approved Logging Plan (ALP), Configuration Management Plan (CMP), and Security Risk Assessment (SRA), either does not exist or has not been finalised and endorsed by the agency. The absence of this formalised documentation may lead to non-compliance during security audits and a delayed or ineffective response to cyber security incidents, should one occur. Without these foundational records, there is no formalised baseline for security controls or clear guidance for incident management.
+•	0411; 0418 (Relating to the identification of users and their access requirements).
+•	0800; 1504 (Relating to the regular review of user access and privileges).
+•	1173; 1401 (Relating to the management and protection of authentication credentials).
+•	1649; 1650 (Relating to the timely revocation of access upon personnel changes).
+Current Risk
+A lack of effective Service Integration and Management (SIAM) processes and procedures, specifically regarding automated requests for the onboarding, offboarding, and access revalidation of agency staff within Ivanti Neurons, presents a security risk. This manual or fragmented approach may lead to unauthorised or misconfigured system and user access, potentially resulting in the compromise of the confidentiality, integrity, or availability of the agency’s system and its sensitive data.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 LIKELY	x	MINOR	=	MEDIUM
 Recommendations:
-•	Finalise Foundational Security Documents: Priority must be given to completing and endorsing the SSP and SRA to provide a formalised security baseline and risk profile for the Windows 11 environment.
-•	Develop an Approved Logging Plan (ALP): Formally document the specific security events to be captured, their retention periods, and the centralised ingestion process to ensure adequate forensic visibility.
-•	Establish a Configuration Management Plan (CMP): Define the formalised procedures for managing system changes, including version control for workstation images and security configuration baselines.
+•	Automate Identity Lifecycle Management: Implement automated workflows within Ivanti Neurons that integrate with HR triggers to ensure user accounts are provisioned, modified, or decommissioned in real-time.
+•	Enforce Regular Access Certification: Establish an automated, periodic revalidation process where managers must formally attest to the continued requirement of access for their staff.
+•	Standardise RBAC within SIAM: Define and enforce clear Role-Based Access Control (RBAC) profiles to ensure that automated onboarding grants only the minimum necessary privileges by default.
 - Treatment #1
-•	Establish a recurring schedule for the annual review and update of all key security documentation to ensure it remains current with the evolving threat landscape and ISM updates.
-•	Appoint a formal document owner within the security architecture team to be responsible for the accuracy and endorsement of the SSP and CMP.
-•	Conduct a mock security audit against the draft documentation to identify and remediate any gaps in compliance before formal submission to the Authorising Officer.
-Residual risk outcome if recommendation is implemented. Finalising and endorsing the required security documentation provides a formalised structure for security governance and incident response. While the inherent consequence of a documentation gap remains "Minor," the implementation of verified and endorsed plans reduces the likelihood of non-compliance or an ineffective response to "Unlikely".
+•	Integrate the Ivanti Neurons platform with the primary Identity Provider (IdP) to ensure a "Single Source of Truth" for all user status changes.
+•	Develop a formal "Offboarding Checklist" that is technically enforced to ensure all physical and logical access is revoked within 24 hours of personnel departure.
+•	Establish a continuous monitoring dashboard to identify "orphan" accounts or accounts with stale access that have bypassed standard lifecycle processes.
+Residual risk outcome if recommendation is implemented.
+The transition from manual to automated identity lifecycle management significantly reduces the window of opportunity for unauthorised access due to administrative delays or errors. While the potential consequence remains "Minor," the likelihood of misconfigured or stale access leading to a security event is reduced to "Rare" through the implementation of rigorous, automated SIAM workflows.
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MINOR	=	
+RARE	x	MINOR	=	
