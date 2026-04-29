@@ -1,24 +1,23 @@
-7.1.1 - W11SR12: Inadequate Management or Governance of AI Systems
+•	
+7.1.1 - W11SR13: Bypassing Secure Internet Gateway (SIG) Controls
 ISM controls:
-•	1884; 1885; 1886 (Relating to the secure development and deployment of AI and machine learning systems).
-•	0013; 0015 (Relating to security governance and reporting).
-•	0041; 1657 (Relating to the approval and control of software applications).
-•	1644 (Relating to the use of approved cloud services, including AI-as-a-Service).
-Current Risk
-There is a risk that inadequate management, oversight, or governance of AI systems integrated into the Windows 11 environment (such as Microsoft Copilot or third-party AI tools) may lead to significant security events. This includes data manipulation, privacy breaches through data leakage, or the malicious control of AI-driven systems. Such failures could compromise the confidentiality, integrity, or availability of the system and its associated data, especially when handling sensitive government information.
+•	0206; 0209 (Relating to the use of an approved Secure Internet Gateway).
+•	0464; 0466 (Relating to the use of Virtual Private Networks (VPNs) to secure communications).
+•	0953; 1081 (Relating to web content filtering and SSL/TLS inspection).
+•	1182 (Relating to the use of intrusion detection and prevention systems).
+Current Risk There is a risk that the lack of a mandatory agency VPN to the Secure Internet Gateway (SIG) for stand-alone workstations will allow these devices to access the internet directly. By bypassing the agency's primary IPS, web, and content filtering controls, the attack surface is significantly increased. This reduced visibility and lack of centralised security control may lead to a compromise of the confidentiality, integrity, or availability of the agency’s system and its sensitive data.
 Risk Assessment:
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
 LIKELY	x	MODERATE	=	HIGH
 Recommendations:
-•	Establish an AI Governance Framework: Develop a formal policy governing the use of AI within the agency, ensuring all AI-driven features are assessed for privacy and security risks before being enabled on Windows 11 endpoints.
-•	Implement Data Loss Prevention (DLP) for AI: Configure Microsoft Purview and other DLP controls to prevent sensitive or classified data from being ingested by AI models or exported through unvetted AI prompts.
-•	Mandate AI Transparency and Explainability: Ensure all AI systems utilised have clear documentation regarding data usage, model training, and decision-making logic to facilitate effective security auditing.
+•	Implement "Always-On" VPN: Deploy an "Always-On" VPN solution (such as Microsoft Tunnel or a third-party equivalent) that forces all internet-bound traffic from stand-alone workstations through the agency SIG.
+•	Enforce Endpoint-Based Web Filtering: Implement client-side web content filtering (e.g., Microsoft Defender for Endpoint web protection) to provide a secondary layer of security for when the device is not connected to the corporate network.
+•	Disable Split Tunnelling: Configure VPN profiles to strictly prohibit split tunnelling, ensuring that no traffic can bypass the inspection capabilities of the Secure Internet Gateway.
 - Treatment #1
-•	Disable all unvetted AI features (such as Copilot for Windows) via Intune/GPO until a comprehensive IRAP assessment has been completed and the risk is formally accepted.
-•	Conduct regular security reviews of AI "prompt logs" and output to identify potential misuse or attempts to bypass security boundaries (e.g., prompt injection).
-•	Integrate AI security posture management into the existing vulnerability management lifecycle to address emerging AI-specific vulnerabilities.
-Residual risk outcome if recommendation is implemented.
-By implementing strict governance and technical DLP controls, the agency can leverage AI capabilities while maintaining a defensible security posture. While the inherent complexity of AI systems keeps the consequence at "Moderate," the likelihood of a successful exploit or data breach is reduced to "Unlikely" through proactive monitoring and restricted deployment.
+•	Utilise Microsoft Intune to deploy and manage persistent VPN profiles that are required for any network connectivity on Windows 11 endpoints.
+•	Implement strict firewall rules on the local workstation image to block all outbound traffic except for established VPN tunnels to the SIG.
+•	Integrate endpoint telemetry with the agency SIEM to monitor for any attempted or successful network connections that bypass the approved gateway.
+Residual risk outcome if recommendation is implemented. The enforcement of a mandatory VPN ensures that all workstation traffic remains subject to the agency's robust gateway security controls, including IPS and content filtering. While the consequence of a data breach remains "Moderate," the likelihood of an successful exploit via direct internet access is reduced to "Unlikely" through the elimination of unencrypted or unmonitored egress paths.
 Risk Likelihood	x	Risk Consequence	=	Risk Rating
-UNLIKELY	x	MODERATE	=	MEDIUM
+UNLIKELY	x	MODERATE	=	
 
